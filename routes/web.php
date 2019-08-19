@@ -35,6 +35,9 @@ Route::get('admin/projectAll','ProjectController@StoreAll')->name('projectsAll')
 
 Route::post('admin/edited{id}', 'ModelsController@update')->name('update');
 Route::resource('admin', 'ModelsController');
+
+Route::get('admin/makepageasdf/{id}', 'ModelsController@destroy');
+Route::get('admin/makepageasdasdf/{id}', 'ProjectController@destroy');
 Route::get('admin/model/storeNote', 'ProjectController@storeNote')->name('storeNote');
 
 Route::get('admin/model', 'CommentsController@ratings')->name('ratings');

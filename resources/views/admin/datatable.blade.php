@@ -19,7 +19,7 @@
     <div class="container">
         <div class="w-form">
           <form  class="form" action="{{route('advancedSearch')}}" method="get" >
-            <select id="Field-5" data-name="Field" name="type" class="type_of_anket w-select">
+            <select id="Field-5" data-name="model_type" name="model_type" class="type_of_anket w-select">
               <option value="">Тип анкеты</option>
               <option value="Актер">Актер</option>
               <option value="Массовка">Массовка</option>
@@ -36,10 +36,11 @@
               <input type="number" name="age_at" class="text-field-3 w-input" placeholder="От">
               <input type="number" name="age_do" class="text-field-4 w-input" placeholder="До">
             </div>
+            
             <div class="div-block-4">
               <div>Рост:</div>
-              <input type="text" class="text-field-5 w-input" placeholder="От" >
-              <input type="text" class="text-field-6 w-input" placeholder="До" >
+              <input type="text" name="height_at" class="text-field-5 w-input" placeholder="От" >
+              <input type="text" name="height_do" class="text-field-6 w-input" placeholder="До" >
             </div>
            
             <select id="Field-7" name="color_eyes" class="eye_color w-select">
@@ -65,7 +66,8 @@
                 <option value="others">другое</option>
             </select>
             
-            <input type="text" class="text-field-7 w-input" placeholder="Имя" ><input type="submit" value="Подобрать" data-wait="Please wait..." class="submit-button w-button">
+            <input type="text" class="text-field-7 w-input" name="hashtag" placeholder="Имя" >
+            <input type="submit" value="Подобрать" data-wait="Please wait..." class="submit-button w-button">
           </form>
         </div>
    <!--      <form action="{{route('advancedSearch')}}" method="get">
@@ -144,7 +146,7 @@
  -->
         <div class="row">
             <div class="col-md-12">
-                <h3 class="title-5 m-b-35">data table</h3>
+                
 
                 <!-- <div class="table-data__tool">
                     <div class="table-data__tool-right">
@@ -169,6 +171,7 @@
                     {{csrf_field()}}
                     <?php $models = DB::table('casting_models')->orderBy('name', 'asc')->get(); ?>
                     @foreach($models as $model)
+                    <?php  $images = unserialize($model->images);?>
                     <div class="worksheet_item">
                         <div class="item_checkbox">
                             <div class="checkbox w-embed">
@@ -178,7 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item_ava" style="background-image: url('{{ url('images',explode('|',$model->images)[0])}}');">
+                        <div class="item_ava" style="background-image: url('{{ url('images', $images[0]) }}');">
                             <div class="ava_items">
                                 <div class="ava_hair_color"></div>
                                 <div class="ava_gender ">
@@ -225,8 +228,14 @@
                                 <h4 class="heading-2">{{$model->address}}</h4>
                             </div>
                         </div>
-                      <div class="item_details"><a href="{{action('CommentsController@detail', $model->id)}}" class="details w-inline-block"><img src="{{ url('images/Vector-1.svg')}}" alt=""></a></div>
-                      <a href="{{action('ModelsController@edit', $model->id)}}" class="btn">edit</a>
+                      <div class="item_details">
+                        <a href="{{action('CommentsController@detail', $model->id)}}" class="details w-inline-block">
+                            <img src="{{ url('images/Vector-1.svg')}}" alt="">
+                        </a>
+                        <a href="{{action('ModelsController@edit', $model->id)}}" class="btn"><i class="fa fa-edit"></i></a>
+                        <a href="{{action('ModelsController@destroy', $model->id)}}" class="btn"><i class="fa fa-trash"></i></a>
+                      </div>
+                      
                     </div>
                     @endforeach
                     <!-- <div class="position">
@@ -241,38 +250,43 @@
                         <input type="text" name="pagename" required="" class="form-control">                    
                         <input type="submit" name="btn_count" value="ali" class="btn btn-info">
                     </div> -->
-                    <div class="category_list position1 noone">
-                        <h2 class="heading-3">Проекты</h2>
-                        @foreach($projects as $id=>$projecta)
-                            @foreach($projecta as $project)
-                            @endforeach
-                            <div class="category_item">
-                            <div class="checkbox categori_checkbox w-embed">
-                              <div id="container">
-                                <input type="radio" name="project_name" value="{{$project->project_name}}" name="check">
-                                <label for="check"><div></div></label>
-                              </div>
-                            </div>
-                            <h4 class="category_title">{{$project->project_name}}</h4>
-                          </div>
-                        @endforeach
-                        </div>
-                    <div class="category_ok_block position">
-                        
-                        <div class="ok_block">
-                          <div class="category_add_block"><a data-w-id="2b158291-55a1-75cd-c6ba-bca4b3c3404b" href="#" class="categories w-inline-block" id="category"><img src="{{ url('images/polygon-1.svg')}}" alt=""><h5 class="heading-4">Категория</h5></a>
-                            <div class="input_category">
-                              <div class="html-embed w-embed">
-                                  <div class="block"><input type="text" name="pagename" required="" placeholder="Имя Страницы" class="input-res"></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="add_category_button_block">
+                        <div class="row lefter position"  >
+                            
 
-                            <input type="submit" value="OK" class="ok_button button_ok w-inline-block">
-                          </div>
+                            
+                            <div class="category_ok_block noone"  id="hideshow2">
+                                <div class="category_list noone" id="categos"> 
+                                    <h2 class="heading-3">Проекты</h2>
+                                    @foreach($projects as $id=>$projecta)
+                                        @foreach($projecta as $project)
+                                        @endforeach
+                                        <div class="category_item">
+                                        <div class="checkbox categori_checkbox w-embed">
+                                          <div id="container">
+                                            <input type="radio" name="project_name" value="{{$project->project_name}}" name="check">
+                                            <label for="check"><div></div></label>
+                                          </div>
+                                        </div>
+                                        <h4 class="category_title">{{$project->project_name}}</h4>
+                                      </div>
+                                    @endforeach
+                                </div>
+                                <div class="ok_block" >
+                                  <div class="category_add_block"><a onclick="hideshow()" data-w-id="2b158291-55a1-75cd-c6ba-bca4b3c3404b" href="#" class="categories w-inline-block" id="category"><img src="{{ url('images/polygon-1.svg')}}" alt=""><h5 class="heading-4">Категория</h5></a>
+                                    <div class="input_category">
+                                      <div class="html-embed w-embed">
+                                          <div class="block"><input type="text" name="pagename" required="" placeholder="Имя Страницы" class="input-res"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="add_category_button_block">
+
+                                    <input type="submit" value="OK" class="ok_button button_ok w-inline-block">
+                                  </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-info height" onclick="hideshow2()"><i class="fas fa-plus "></i></button>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

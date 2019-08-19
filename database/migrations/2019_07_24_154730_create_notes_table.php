@@ -18,12 +18,15 @@ class CreateNotesTable extends Migration
             $table->integer('project_id')->nullable();
             $table->integer('page_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('user_rate')->nullable();
+            $table->integer('rezh_rate')->nullable()->default(0);
+            $table->integer('produser_rate')->nullable()->default(0);
+            $table->integer('client_rate')->nullable()->default(0);
             $table->text('comment')->nullable();
+            $table->integer('admin_rate')->nullable()->default(0);
+            $table->text('admin_comment')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

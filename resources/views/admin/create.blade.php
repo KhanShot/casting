@@ -23,65 +23,75 @@
   <div class="bg-gray">
     <div class="row pb-3"><!-- first row FIO-->
       <div class="col-4">
+        <label class="la-label" >Имя</label>
         <input required="" type="text" placeholder="Имя" class="form-control" name="name" required="">
       </div>
       <div class="col-4">
+        <label class="la-label">фамилия</label>
         <input required="" type="text" placeholder="Фамилия" class="form-control" required="" name="surname">
       </div>
       <div class="col-4">
+        <label class="la-label" >Очество</label>
         <input required="" type="text" placeholder="Очество" class="form-control" name="fathersname" required="">
       </div>
     </div> <!-- first row  FIO-->
     <!-- contacts info -->
     <div class="row pb-3">
       <div class="col-4">
+        <label class="la-label">Город</label>
         <input required="" type="text" name="city" placeholder="Город" class="form-control" list="city" >
         <datalist id="city">
-          <option value="Алматы">
-          <option value="Нур-Султан">
-          <option value="Караганда">
-          <option value="Актау">
-          <option value="Семей">
-          <option value="Усткеменагорскь">
-          <option value="Петропавл">
-          <option value="Талдыкорган">
+          <option value="Алматы"></option>
+          <option value="Нур-Султан"></option>
+          <option value="Караганда"></option>
+          <option value="Актау"></option>
+          <option value="Семей"></option>
+          <option value="Усткеменагорскь"></option>
+          <option value="Петропавл"></option>
+          <option value="Талдыкорган"></option>
         </datalist>
       </div>
 
         <div class="col-2">
+          <label class="la-label">Адрес</label>
           <input required="" type="text" placeholder="Адрес" class="form-control" name="address">
         </div>
     
       
         <div class="col-2">
+          <label class="la-label">Почта</label>
           <input required="" type="email" placeholder="Почта" class="form-control" name="email" required="">
         </div>
       
         <div class="col-2">
+          <label class="la-label">Телефон номер</label>
           <input required="" type="tel" placeholder="Телефон номер" class="form-control" name="phone">
         </div>
      
 
       
         <div class="col-2">
+          <label >Социальные аккаунты</label>
           <input required="" type="text" name="social_acc" placeholder="социальные аккаунты, через запятую" class="form-control" list="social_acc" multiple>
           <datalist id="social_acc">
-            <option value="instagram.com/">
-            <option value="vk.com/">
+            <option value="instagram.com/"></option>
+            <option value="vk.com/"></option><
           </datalist>
         </div>
     </div><!-- contacts info -->
     <div class="row pb-3"> <!-- rest info1 -->
         <div class="col-2">
-         <label class="la-label"></label>
+         <label class="la-label">Тип Анкеты</label>
           <SELECT placeholder="" class="form-control" name="model_type">
             <option value="">Тип Анкеты</option>
             <option value="Актер">Актер</option>
+            <option value="Профессиональный актер">Профессиональный актер</option>
             <option value="Массовка">Массовка</option>
+            <option value="Без опыта">Без опыта</option>
           </SELECT>
         </div>
         <div class="col-2">
-          <label class="la-label"></label>
+          <label class="la-label">Пол</label>
           <SELECT placeholder="" class="form-control" name="gender">
             <option value="">Пол</option>
             <option value="Мужской">Мужской</option>
@@ -107,15 +117,15 @@
         </div>
 
         <div class="col">
-           <label class="la-label"></label>
+           <label class="la-label">Возраст</label>
           <input required="" type="number" placeholder="Возраст" class="form-control" name="age">
         </div>
         <div class="col">
-           <label class="la-label"> </label>
+           <label class="la-label">Рост </label>
           <input required="" type="number" placeholder="Рост" class="form-control" name="height">
         </div>
         <div class="col">
-           <label class="la-label"> </label>
+           <label class="la-label">Вес </label>
           <input required="" type="number" placeholder="Вес" class="form-control" name="weight">
         </div>
     </div><!-- rest info1 -->
@@ -149,10 +159,10 @@
         <label class="la-label">Размер обуви </label>
         <input required="" type="text" name="foot_size" placeholder="Размер обуви" class="form-control" list="foot_size" >
         <datalist id="foot_size">
-          <option value="41">
-          <option value="40">
-          <option value="39">
-          <option value="38">
+          <option value="41"></option>
+          <option value="40"></option>
+          <option value="39"></option>
+          <option value="38"></option>
         </datalist>
       </div>
 
@@ -160,31 +170,35 @@
         <label class="la-label">Тип внешности</label>
         <input required="" type="text" name="appearance" placeholder="выберите или напишите сами" class="form-control" list="appearance" >
         <datalist id="appearance">
-          <option value="европейский">
-          <option value="азиатский">
-          <option value="евразийский">
-          <option value="афро">
+          <option value="европейский"></option>
+          <option value="азиатский"></option>
+          <option value="евразийский"></option>
+          <option value="афро"></option>
+        </datalist>
+
       </div>
 
       <div class="col">
         <label class="la-label">Цвет волос</label>
         <input required="" type="text" name="color_hair" placeholder="выберите или напишите сами" class="form-control" list="color_hair" >
         <datalist id="color_hair">
-          <option value="Брюнет">
-          <option value="Блондин">
-          <option value="Рыжий">
-          <option value="Шатен">
-          <option value="Седой">
+          <option value="Брюнет"></option>
+          <option value="Блондин"></option>
+          <option value="Рыжий"></option>
+          <option value="Шатен"></option>
+          <option value="Седой"></option>
+        </datalist>
       </div>
       <div class="col">
         <label class="la-label">цвет глаз</label>
         <input required="" type="text" name="color_eyes"  placeholder="выберите или напишите сами" class="form-control" list="color_eyes" >
         <datalist id="color_eyes">
-          <option value="Карий">
-          <option value="Синий">
-          <option value="Голубой">
-          <option value="Чёрный">
-          <option value="Болотный">
+          <option value="Карий"></option>
+          <option value="Синий"></option>
+          <option value="Голубой"></option>
+          <option value="Чёрный"></option>
+          <option value="Болотный"></option>
+        </datalist>
       </div>
       <div class="col">
         <label class="la-label">Профессия</label>
@@ -249,16 +263,7 @@
           <input required="" type="text" placeholder="Вокал" class="form-control" name="skill_vocal">
         </div>
        
-        <div class="col-3">
-          <label for="skill_sport" class="form-text">Вождение автомобиля/иного транспорта:</label>
-          <label><input type="checkbox" name="skill_car_ride[]" value="А - мотоциклы">А - мотоциклы</label>
-          <label><input type="checkbox" name="skill_car_ride[]" value="B - легковые автомобили">B - легковые автомобили</label>
-          <label><input type="checkbox" name="skill_car_ride[]" value="C - грузовые автомобили">C - грузовые автомобили</label>
-          <label><input type="checkbox" name="skill_car_ride[]"  value="D - автобусы">D - автобусы</label>
-          <label><input type="checkbox" name="skill_car_ride[]"  value="М - мопеды">М - мопеды</label>
-          
-          
-        </div>
+        
       
         <div class="col-3">
           <label>Верховая езда </label> 
@@ -268,30 +273,58 @@
             <option value="Средне">Средне</option>
             <option value="Плохо">Плохо</option>
             <option value="Очень плохо">Очень плохо</option>
+          </SELECT>
         </div>
       
         <div class="col-3">
           <label>Другие навыки</label> 
-          <input required="" type="text" placeholder="Другие навыки" class="form-control" name="skill_else">
+          <textarea required="" type="text" placeholder="Другие навыки" class="form-control" name="skill_else" rows="4"></textarea>
         </div>
       
         <div class="col-3">
           <label>Знание языков (указать уровни владения)</label> 
           <input required="" type="text" placeholder="Знание языков (указать уровни владения)" class="form-control" name="languages">
         </div>
+        <div class="col-3">
+          
+            <label for="skill_sport" class="form-text">Вождение автомобиля/иного транспорта:</label>
+            <label><input type="checkbox" name="skill_car_ride[]" value="А - мотоциклы">А - мотоциклы</label>
+            <label><input type="checkbox" name="skill_car_ride[]" value="B - легковые автомобили">B - легковые автомобили</label>
+            <label><input type="checkbox" name="skill_car_ride[]" value="C - грузовые автомобили">C - грузовые автомобили</label>
+            <label><input type="checkbox" name="skill_car_ride[]"  value="D - автобусы">D - автобусы</label>
+            <label><input type="checkbox" name="skill_car_ride[]"  value="М - мопеды">М - мопеды</label>
+          
+            <input type="text" name="skill_car_ride1" class="form-control" placeholder="или укажите свой">
+          
+        </div>
+        <div class="col-3">
+            <label>Предпочтение в еде</label> 
+            <input type="text" placeholder="Не обязательно" class="form-control" name="food_prefer">
+          </div>
+          <div class="col-3">
+            <label>Аллергия</label> 
+            <input type="text" placeholder="Если есть(не обязательно)" class="form-control" name="allergy">
+          </div>
+          <div class="col-3">
+            <label>Заболевании</label> 
+            <input type="text" placeholder="Если есть(не обязательно)" class="form-control" name="illness">
+          </div>
     </div><!-- rest info3 -->
   </div>
   <div class="bg-gray">
   <div class="row pb-3"><!-- rest info4 -->
      <div class="col-3">
-        <input required="" type="text" placeholder="16. Опыт работы в кино на TV" class="form-control" name="job_experience_tv">
+        <label>Опыт работы в кино на TV</label> 
+        <input required="" type="text" placeholder="Опыт работы в кино на TV" class="form-control" name="job_experience_tv">
       </div>
       <div class="col-3">
+        <label>Опыт работы в театре</label> 
         <input required="" type="text" placeholder="Опыт работы в театре" class="form-control" name="job_experience_teatr">
       </div>
    
       <div class="col-3">
-        <textarea  required="" type="text" placeholder="О себе " class="form-control" name="about_you"></textarea>
+        <label>О себе</label> 
+        <textarea  required="" type="text" placeholder="О себе" class="form-control" name="about_you" rows="4"></textarea>
     
       </div>
     
@@ -299,6 +332,8 @@
         <label for="can_naked">Готовы ли сниматься обнаженными?</label> 
         <SELECT  class="form-control mb-3" name="can_naked">
           <option value="ДА">Да</option>
+          <option value="В белье">В белье</option>
+          <option value="В топике">В топике</option>
           <option value="Нет">Нет</option>
         </SELECT>
       </div>
@@ -337,7 +372,8 @@
 
     <div class="d-flex justify-content-center m-5">
       
-        <button type="submit" class="btn btn-success block">Добавить моделя</button>
+        <button type="submit" class="btn btn-success block">Добавить модель</button>
     </div>
+
 </form>
 @endsection

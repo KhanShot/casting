@@ -28,13 +28,15 @@ class CommentsController extends Controller{
     	
         $project_id = $request->input('project_id');
         $page_id = $request->input('page_id');
-        $rating = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $model->id)->avg('user_rate');
-        if (is_null($rating)) {
-            $rating = 0;
-        }
+        
+        $rezh_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $model->id)->avg('rezh_rate');
+        $produser_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $model->id)->avg('produser_rate');
+        $client_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $model->id)->avg('client_rate');
+
+        
         $comments = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $model->id)->where('comment',"!=", '')->get();
         $hashed = Hash::make('admin/model');
-    	return view('admin/model', compact('model','project_id','page_id', 'rating','comments'));
+    	return view('admin/model', compact('model','project_id','page_id', 'produser_rate','client_rate','rezh_rate','comments'));
     }
 
     

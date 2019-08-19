@@ -554,6 +554,18 @@
           <label>Знание языков (указать уровни владения)</label> 
           <input required="" type="text" placeholder="Знание языков (указать уровни владения)" class="form-control" name="languages" value="{{$model->languages}}">
         </div>
+        <div class="col-3">
+          <label>Предпочтение в еде</label> 
+          <input required="" type="text" placeholder="Предпочтение в еде" class="form-control" name="food_prefer" value="{{$model->food_prefer}}">
+        </div>
+        <div class="col-3">
+          <label>Аллергия</label> 
+          <input required="" type="text" placeholder="Аллергия" class="form-control" name="allergy" value="{{$model->allergy}}">
+        </div>
+        <div class="col-3">
+          <label>Заболевании</label> 
+          <input required="" type="text" placeholder="Заболевании" class="form-control" name="illness" value="{{$model->illness}}">
+        </div>
     </div><!-- rest info3 -->
   </div>
   <div class="bg-gray">

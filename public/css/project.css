@@ -1,0 +1,35 @@
+.allpagescontainer{
+	min-height: 500px;
+	border: 1px solid #FCEFDD;
+	padding: 5px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 4rem;
+}
+
+.odd{
+	background-color: #E0FAF7;
+	margin-top: 15px !important;
+
+} 
+.even{
+	background-color: #DCFBB3;
+	
+} 
+
+.page{
+	display: flex;
+	flex-direction: column;
+	min-height: 250px ;
+	border: 1px solid #FCEFDD; 
+	min-width: 970px;
+
+}
+.btn-text{
+	font-size: 10px!important;
+}
+.page_container{
+	margin: 20px;
+}

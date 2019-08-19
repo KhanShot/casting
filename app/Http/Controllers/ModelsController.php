@@ -146,10 +146,15 @@ class ModelsController extends Controller
          //skill_car_ride
         $skill_car_rides = $request->input('skill_car_ride');
         $final_car = "";
+        $skill_car_svoi = $request->input('skill_car_ride1');
 
         foreach($skill_car_rides as $car_ride){
             $final_car =$final_car." ". $car_ride.",";
         }
+        if ($skill_car_svoi) {
+            $final_car = $final_car . $skill_car_svoi; 
+        }
+
         //have_work
         $have_works = $request->input('have_work');
         $final_work = "";
@@ -186,6 +191,17 @@ class ModelsController extends Controller
             }
           
         }
+
+        if ($request->input('food_prefer')) {
+            $model['food_prefer'] = $request->input('food_prefer');
+        }
+        if ($request->input('allergy')) {
+            $model['allergy'] = $request->input('allergy');
+        }
+        if ($request->input('illness')) {
+            $model['illness'] = $request->input('illness');
+        }
+
         $dataImages = serialize($imagesArr);
         $dataVideos = serialize($videosArr);
         $model['skill_sport'] = $skill_sport;
@@ -389,7 +405,16 @@ class ModelsController extends Controller
             }
             $dataImages = serialize($imagesArr);
             $model->images = $dataImages;
-        } 
+        }
+        if ($request->input('food_prefer')) {
+            $model->food_prefer = $request->input('food_prefer');
+        }
+        if ($request->input('allergy')) {
+            $model->allergy = $request->input('allergy');
+        }
+        if ($request->input('illness')) {
+            $model->illness = $request->input('illness');
+        }
         $model->name = $request->get('name');
         $model->surname = $request->get('surname');
         $model->fathersname = $request->get('fathersname');
@@ -492,16 +517,21 @@ class ModelsController extends Controller
         return view('admin/search', compact('models'));
     }
     public function advancedSearch(Request $request){
-       
+       $projects = Projects::all()->groupBy('project_id');
         
         $filters = [
             'color_eyes' => Input::get('color_eyes'),
             'color_hair' => Input::get('color_hair'),
+            'model_type' => Input::get('model_type'),
+            'gender' => Input::get('gender'),
             'age_at' => Input::get('age_at'),
             'age_do' => Input::get('age_do'),
+            'height_at' => Input::get('height_at'),
+            'height_do' => Input::get('height_do'),
             'body' => Input::get('body'),
+            'hashtag' =>input::get('hashtag'),
         ];
-        $models = Casting_model::where(function ($query) use ($filters) {
+        $modelss = Casting_model::where(function ($query) use ($filters) {
             if ($filters['color_eyes']) {//color_eyes
                 if ($filters['color_eyes'] == 'others') {
                     $query->whereNotIn('color_eyes',  array('Карий', 'Карий','Голубой','Болотный','Чёрный'));
@@ -510,6 +540,14 @@ class ModelsController extends Controller
                     $query->where('color_eyes', '=', $filters['color_eyes']);
                 }
             }//end color_eyes
+            if ($filters['model_type']) {//model_type
+                $query->where('model_type', '=', $filters['model_type']);
+            }//end model_type
+
+            if ($filters['gender']) { //gender
+                $query->where('gender', '=', $filters['gender'] );
+            }//end gender
+
             if($filters['color_hair']){// color_hair
                 if ($filters['color_hair'] == 'others') {
                     $query->whereNotIn('color_hair',  array('Брюнет', 'Блондин','Рыжий','Шатен','Седой'));
@@ -539,7 +577,24 @@ class ModelsController extends Controller
             elseif (!($filters['age_at']) && ($filters['age_do']) ) {
                 $query->whereBetween('age',[0, $filters['age_do'] ]);
             }//END AGEs
+             if($filters['height_at']){// AGE
+                if($filters['height_do']){
+                    $query->whereBetween('height',[$filters['height_at'], $filters['height_do']]);
+                }
+                else{
+                    $query->whereBetween('height',[$filters['height_at'], 10000000000 ]);
+                }
+            }
+            elseif (!($filters['height_at']) && ($filters['height_do']) ) {
+                $query->whereBetween('height',[0, $filters['height_do'] ]);
+            }//END AGEs
+
+            if($filters['hashtag']){
+                $query->where('name','LIKE','%' . $filters['hashtag'] . '%')->orWhere('surname','LIKE','%' . $filters['hashtag'] . '%')->orWhere('fathersname','LIKE','%' . $filters['hashtag'] . '%')->orWhere('city','LIKE','%' . $filters['hashtag'] . '%')->orWhere('address','LIKE','%' . $filters['hashtag'] . '%')->orWhere('body','LIKE','%' . $filters['hashtag'] . '%')->orWhere('appearance','LIKE','%' . $filters['hashtag'] . '%')->orWhere('current_work','LIKE','%' . $filters['hashtag'] . '%')->orWhere('profession','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_sport','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_fight_art','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_dance','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_instrumental','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_vocal','LIKE','%' . $filters['hashtag'] . '%')->orWhere('skill_else','LIKE','%' . $filters['hashtag'] . '%')->orWhere('languages','LIKE','%' . $filters['hashtag'] . '%')->orWhere('about_you','LIKE','%' . $filters['hashtag'] . '%');
+            }
         })->get();
-        return view('admin/advancedsearch', compact('models'));
+
+        $string = " " ; 
+        return view('admin/advancedsearch', compact('modelss','projects'))->with('msg', 'Поиск: ');
     }
 }
