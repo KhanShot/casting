@@ -1,32 +1,35 @@
 @extends('admin.master')
-
+@include('admin.navbar')
 @section('content')
+
 <div class="container">
-    <p class="heading">Создать пользователя</p>
+    <p class="heading">Редактировать страницу для <span class="text-primary"> {{$user->name}}</span> </p>
 
     <div class="container">
-        <form  action="{{ action('UsersController@show') }}" >
+        <form  action="{{ action('UsersController@update', $user->id ) }}" >
             <div class="column">
               <div class="input_form">
                 <label>Имя</label>
-                <input type="text" name="name" value="" class="form-control">
+                <input type="text" name="name" value="{{$user->name}}" class="form-control">
               </div>
               <div class="input_form">
                 <label>Почта</label>
-                <input type="text" name="email" class="form-control">
+                <input type="text" name="email" value="{{$user->email}}" class="form-control">
               </div>
               <div class="input_form">
                 <label class="label">Привелегия админа</label>
                 <div class="mid">
                   <label class="rocker">
                     <input type="checkbox" id="checkbox" 
-                      
+                      <?php if ($user->is_admin == '1') {
+                          echo "checked";
+                      }?>
                     >
                     <span class="switch-left">Да</span>
                     <span class="switch-right">Нет</span>
                   </label>
                 </div>
-                    <input type="hidden" name="is_admin" id="is_admin" >
+                    <input type="hidden" name="is_admin" id="is_admin" value="{{$user->is_admin}}">
                 <div id="textinp">a</div>
                   
 
@@ -40,9 +43,12 @@
                 <label>Повторите пароль</label>
                 <input type="password" name="password1" class="form-control" id="pass2" onkeyup="checkPass(); return false;" >
               </div>
-              
+              <div id="error-nwl"></div>
+              <input type="submit" name="" value="Обновить" class="btn btn-info">
             </div>
         </form>
     </div>
 </div>
+
+
 @endsection

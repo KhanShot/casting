@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
                 'name' => 'john',
                 'email' => 'hello@world.com',
                 'is_admin' => 1,
-                'password' => '$2y$10$8/bJJ8L3tfsfs6pOmBohU.lNuWzmXp/fPTJiMgPA6mypp.JVAAQbe'
+                'password' => '$2y$10$Pb.qDJVoTLSMNnLLhUIK0.4ThO9KPHRABgY4UDkRzJO/Rc2ps35eC'
             )
         );
     }

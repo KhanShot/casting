@@ -59,16 +59,22 @@ class PageController extends Controller
     }
     public function pages(){
         $page = page_Model::all()->sortByDesc("created_at")->groupBy('page_id');
-        return redirect('admin.makepage', compact('page'));
+        if (Auth::check()) {
+            return redirect('admin/makepage');
+        }
+        else{
+            return abort(404);
+        }
     }
-    public function page($id){
+    public function page(Request $request, $id){
+        $project_id = $request->XWpjeYebHtellefaegiunbgtwep;
+        $pageurl = "XWpjeYebHtellefaegiunbgtwep=". $project_id;
+
     	$models = DB::table('casting_models')
     	->join('formedpage','formedpage.user_id', "=", 'casting_models.id')
     	->where('formedpage.page_id',$id)
     	->get();
-        
-        
-    	return view('admin.pages', compact('models'));
+    	return view('admin.pages', compact('models', 'project_id', 'pageurl'));
     }
     public function delete($id){
         $page = page_Model::all()->where("page_id",$id);
@@ -91,7 +97,60 @@ class PageController extends Controller
         return back();
     }
     
-    public function images(){
-        return view('admin.images');    
+    public function allpages(){
+        $pages = DB::table('projects')
+        ->crossJoin('formedpage')
+        ->get()->groupBy('page_id');
+        
+
+
+        
+        return view('admin.allpages', compact('pages'));    
     }   
+
+
+    public function detailpage($id){
+        $models = DB::table('casting_models')
+        ->join('formedpage','formedpage.user_id', "=", 'casting_models.id')
+        ->join('projects','projects.page_id', "=", 'projects.page_id')
+        ->where('formedpage.page_id',$id)
+        ->get()->groupBy('page_name');
+
+
+        $project_name = Projects::where('page_id', $id)->get('project_name');
+
+
+        $projects = Projects::all()->groupBy('project_id');
+        return view('admin.detailpage', compact('models', 'projects', 'project_name')) ;
+    }
+
+
+    public function move_or_copy(Request $request){
+        $move_or_copy = $request->input('move_or_copy');
+        $projects = $request->input('projects');
+        $page_id = $request->input('page_id');
+        $project_id = $request->input('project_id');
+        $pronaname = $request->input('proname');
+
+
+
+
+
+        if(!$projects){
+            return back()->with('msg_error', 'выберите проект');
+        }
+        
+        if ($pronaname == $projects) {
+            return back()->with('msg_error', 'страница уже имеется в указанном проекте');
+        }
+        
+        if ($move_or_copy == 'copy') {
+            $data = array(
+                'project_name' => $projects,
+                'page_id' => $page_id,
+                'project_id'=> $page_id,
+            );
+            Projects::create($data);
+        }
+    }
 }

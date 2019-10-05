@@ -1,20 +1,32 @@
 @extends('admin.master')
-
+@include('admin.navbar')
 @section('content')
+
 <div class="container">
     <p class="heading">Создать пользователя</p>
 
     <div class="container">
-        <form  action="{{ action('UsersController@show') }}" >
+        <form  action="{{ action('UsersController@store') }}" >
             <div class="column">
               <div class="input_form">
                 <label>Имя</label>
                 <input type="text" name="name" value="" class="form-control">
               </div>
+
               <div class="input_form">
                 <label>Почта</label>
-                <input type="text" name="email" class="form-control">
+                @if (\Session::has('msg'))
+                    <div class="alert alert-warning">
+                        
+                        {!! \Session::get('msg') !!}
+                    </div>
+                @endif
+                <input type="text" name="email" class="form-control" 
+
+                >
               </div>
+
+
               <div class="input_form">
                 <label class="label">Привелегия админа</label>
                 <div class="mid">
@@ -33,16 +45,19 @@
               </div>
                <label>Изменить пароль</label>
               <div class="input_form">
-                <label>Введите пароль <small>(не обязательно)</small></label>
+                <label>Введите пароль </label>
                 <input type="password" name="password"  class="form-control" id="pass1" >
               </div>
               <div class="input_form">
                 <label>Повторите пароль</label>
                 <input type="password" name="password1" class="form-control" id="pass2" onkeyup="checkPass(); return false;" >
               </div>
-              
+              <div id="error-nwl"></div>
+              <input type="submit" name="" value="Создать" class="btn btn-info">
             </div>
         </form>
     </div>
 </div>
+
+
 @endsection

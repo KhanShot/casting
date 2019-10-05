@@ -12,25 +12,20 @@ use Illuminate\Support\Facades\DB;
 
 
 ?> <?php global $count;  ?>   <?php
-class ModelsController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    
+class ModelsController extends Controller{
+
     public function datatable(){
         //$models = Casting_model::orderBy('id', 'DESC');;
-        $projects = Projects::all()->groupBy('project_id');
-        $models = DB::table('casting_models')->orderBy('id', 'desc')->get();
-        
-        return view('admin.datatable', compact('models', 'projects'));
+        if (Auth::check()) {
+            $projects = Projects::all()->groupBy('project_id');
+            $models = DB::table('casting_models')->orderBy('id', 'desc')->get();
+            return view('admin.datatable', compact('models', 'projects'));
+        }
+        return abort(404);
     }
     public function index(){
         if(Auth::check()){
             $pages = DB::table('formedpage')->distinct('page_id')->count('page_id');
-            
             $models = Casting_model::get()->count();
             return view('admin.index', compact('models', 'pages'));
         }
@@ -40,7 +35,6 @@ class ModelsController extends Controller
     }
     public function create(){
         if(Auth::check()){
-            
             return view('admin.create');    
         }
         else{
@@ -56,78 +50,96 @@ class ModelsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $model = $this->validate(request(), [
-            'model_type'=>'required',
-            'name' => 'required',
-            'surname' => 'required',
-            'fathersname' => 'required',
-            'email' => 'required',
-            'social_acc' => 'required',
-            'phone' => 'required',
-            'pasport' => 'required',
-            'city' => 'required',
-            'gender' => 'required',
-            'address' => 'required',
-            'can_go_abroad' => 'required',
-            'age' => 'required|numeric',
-            'height' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'body' => 'required',
-            'clothes_size' => 'required',
-            'foot_size' => 'required|numeric',
-            'appearance' => 'required',
-            'color_hair' => 'required',
-            'color_eyes' => 'required',
-            'profession' => 'required',
-            'current_work' => 'required',
-            'skill_sport' => 'required',
-            'skill_fight_art' => 'required',
-            'skill_dance' => 'required',
-            'skill_instrumental' => 'required',
-            'skill_vocal' => 'required',
-            'skill_car_ride' => 'required',
-            'skill_horse_ride' => 'required',
-            'skill_else' => 'required',
-            'languages' => 'required',
-            'job_experience_tv' => 'required',
-            'job_experience_teatr' => 'required',
-            'about_you' => 'required',
-            'can_naked' => 'required',
-            'have_work' => 'required',
-            'will_work' => 'required',
-            
-            'images' => 'required',
-            'videos' => 'required'
-        ]);
+        $model = array(
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'fathersname' => $request->input('fathersname'),
+            'model_type'=>$request->input('model_type'),
+            'email' => $request->input('email'),
+            'social_acc' => $request->input('social_acc'),
+            'phone' => $request->input('phone'),
+            'pasport' => $request->input('phone'),
+            'city' => $request->input('city'),
+            'gender' => $request->input('gender'),
+            'address' => $request->input('address'),
+            'can_go_abroad' => $request->input('can_go_abroad'),
+            'age' => $request->input('age'),
+            'height' => $request->input('height'),
+            'weight' => $request->input('weight'),
+            'body' => $request->input('body'),
+            'clothes_size' => $request->input('clothes_size'),
+            'foot_size' => $request->input('foot_size'),
+            'appearance' => $request->input('appearance'),
+            'color_hair' => $request->input('color_hair'),
+            'color_eyes' => $request->input('color_eyes'),
+            'profession' => $request->input('profession'),
+            'current_work' => $request->input('current_work'),
+            'skill_sport' => $request->input('skill_sport'),
+            'skill_fight_art' => $request->input('skill_fight_art'),
+            'skill_dance' => $request->input('skill_dance'),
+            'skill_instrumental' => $request->input('skill_instrumental'),
+            'skill_vocal' => $request->input('skill_vocal'),
+            'skill_car_ride' => $request->input('skill_car_ride'),
+            'skill_horse_ride' => $request->input('skill_horse_ride'),
+            'skill_else' => $request->input('skill_else'),
+            'languages' => $request->input('languages'),
+            'job_experience_tv' => $request->input('job_experience_tv'),
+            'job_experience_teatr' => $request->input('job_experience_teatr'),
+            'about_you' => $request->input('about_you'),
+            'can_naked' => $request->input('can_naked'),
+            'have_work' => $request->input('have_work'),
+            'will_work' => $request->input('will_work'),
+            'images' => $request->input('images'),
+            'videos' => $request->input('videos')
+        );
+        $SocArr = array();
+
+        if($request->input('socc_vk') && $request->input('socc_vk') != "vk.com/"){
+            $SocArr[] = $request->input('socc_vk');
+        }
+        if($request->input('socc_insta') && $request->input('socc_insta') != "instagram.com/"){
+            $SocArr[] = $request->input('socc_insta');
+        }
+        if($request->input('socc_ano')){
+            $SocArr[] = $request->input('socc_ano');
+        }
+        
         //sport
         $skill_sport = "";
 
         $sports = $request->input('skill_sport');
         $sportsvoi = $request->input('skill_sport1');
-        foreach($sports as $sport){
-            $skill_sport =$skill_sport." ". $sport.",";
-        }
-        if($sportsvoi){
-            $skill_sport= $skill_sport ." ". $sportsvoi;
+        if($sports){
+            foreach($sports as $sport){
+                $skill_sport =$skill_sport." ". $sport.",";
+            }
+            if($sportsvoi){
+                $skill_sport= $skill_sport ." ". $sportsvoi;
+            }
         }
         //fight
         $skill_fight_art = "";
         $skill_fights = $request->input('skill_fight_art');
         $skill_fightsvoi = $request->input('skill_fight_art1');
-
-        foreach($skill_fights as $fight){
-            $skill_fight_art =$skill_fight_art." ". $fight.",";
+        if($skill_fights){
+            foreach($skill_fights as $fight){
+                $skill_fight_art =$skill_fight_art." ". $fight.",";
+            }
         }
+
         if($skill_fightsvoi){
             $skill_fight_art= $skill_fight_art ." ". $skill_fightsvoi;
         }
+        
 
         //dance
         $skill_dances = $request->input('skill_dance');
         $skill_dancesvoi = $request->input('skill_dance1');
         $final_dance = "";
-        foreach($skill_dances as $dance){
-            $final_dance =$final_dance." ". $dance.",";
+        if($skill_dances){
+            foreach($skill_dances as $dance){
+                $final_dance =$final_dance." ". $dance.",";
+            }
         }
         if($skill_dancesvoi){
             $final_dance= $final_dance ." ". $skill_dancesvoi;
@@ -137,8 +149,10 @@ class ModelsController extends Controller
         $skill_instrumentals = $request->input('skill_instrumental');
         $instrument_svoi = $request->input('skill_instrumental1');
         $final_intrument = "";
-        foreach($skill_instrumentals as $instrument){
-            $final_intrument =$final_intrument." ". $instrument.",";
+        if($skill_instrumentals){
+            foreach($skill_instrumentals as $instrument){
+                $final_intrument =$final_intrument." ". $instrument.",";
+            }
         }
         if($instrument_svoi){
             $final_intrument= $final_intrument ." ". $instrument_svoi;
@@ -147,9 +161,10 @@ class ModelsController extends Controller
         $skill_car_rides = $request->input('skill_car_ride');
         $final_car = "";
         $skill_car_svoi = $request->input('skill_car_ride1');
-
-        foreach($skill_car_rides as $car_ride){
-            $final_car =$final_car." ". $car_ride.",";
+        if($skill_car_rides){
+            foreach($skill_car_rides as $car_ride){
+                $final_car =$final_car." ". $car_ride.",";
+            }
         }
         if ($skill_car_svoi) {
             $final_car = $final_car . $skill_car_svoi; 
@@ -158,16 +173,18 @@ class ModelsController extends Controller
         //have_work
         $have_works = $request->input('have_work');
         $final_work = "";
-
-        foreach($have_works as $work){
-            $final_work =$final_work." ". $work.",";
+        if ($have_works) {
+            foreach($have_works as $work){
+                $final_work =$final_work." ". $work.",";
+            }
         }
         //will_work
         $will_works = $request->input('will_work');
         $final_willwork = "";
-
-        foreach($will_works as $willwork){
-            $final_willwork =$final_willwork." ". $willwork.",";
+        if ($will_works) {
+            foreach($will_works as $willwork){
+                $final_willwork =$final_willwork." ". $willwork.",";
+            }
         }
        $video = $request->videos;
         $videoName = "";
@@ -180,6 +197,10 @@ class ModelsController extends Controller
             }
           
         }
+        if (!$video) {
+            $videosArr[] ="default.mp4";
+        }
+
         $image = $request->images;
         $imageName ="";
         $imagesArr=array();
@@ -189,8 +210,12 @@ class ModelsController extends Controller
                 $images->move('images',$imageName);
                 $imagesArr[] =$imageName;
             }
-          
         }
+        if (!$image) {
+            $imagesArr[] ="default.jpg";
+        }
+
+
 
         if ($request->input('food_prefer')) {
             $model['food_prefer'] = $request->input('food_prefer');
@@ -214,8 +239,14 @@ class ModelsController extends Controller
         $model['images'] = $dataImages;
         $model['videos'] = $dataVideos; 
         $model['fill_date'] = '2019/05/25';
-        Casting_model::create($model);
-        return back()->with('success', 'Модель успешно добавлен!');
+        $model['social_acc'] = serialize($SocArr);
+        if (Auth::check()) {
+            Casting_model::create($model);
+            return back()->with('success', 'Модель успешно добавлен!');
+        }
+        else{
+            return abort(404);
+        }
     }
 
     /**
@@ -255,54 +286,16 @@ class ModelsController extends Controller
      */
     public function update(Request $request, $id){
         $model = Casting_model::find($id);
-        $this->validate(request(), [
-            'model_type'=>'required',
-            'name' => 'required',
-            'surname' => 'required',
-            'fathersname' => 'required',
-            'email' => 'required',
-            'social_acc' => 'required',
-            'phone' => 'required',
-            'pasport' => 'required',
-            'city' => 'required',
-            'gender' => 'required',
-            'address' => 'required',
-            'can_go_abroad' => 'required',
-            'age' => 'required|numeric',
-            'height' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'body' => 'required',
-            'clothes_size' => 'required',
-            'foot_size' => 'required|numeric',
-            'appearance' => 'required',
-            'color_hair' => 'required',
-            'color_eyes' => 'required',
-            'profession' => 'required',
-            'current_work' => 'required',
-            'skill_sport' => 'required',
-            'skill_fight_art' => 'required',
-            'skill_dance' => 'required',
-            'skill_instrumental' => 'required',
-            'skill_vocal' => 'required',
-            'skill_car_ride' => 'required',
-            'skill_horse_ride' => 'required',
-            'skill_else' => 'required',
-            'languages' => 'required',
-            'job_experience_tv' => 'required',
-            'job_experience_teatr' => 'required',
-            'about_you' => 'required',
-            'can_naked' => 'required',
-            'have_work' => 'required',
-            'will_work' => 'required',
-            
-        ]);
+   
         //sport
         $skill_sport = "";
 
         $sports = $request->input('skill_sport');
         $sportsvoi = $request->input('skill_sport1');
-        foreach($sports as $sport){
-            $skill_sport =$skill_sport." ". $sport.",";
+        if ($sports) {
+            foreach($sports as $sport){
+                $skill_sport =$skill_sport." ". $sport.",";
+            }
         }
         if($sportsvoi){
             $skill_sport= $skill_sport ." ". $sportsvoi;
@@ -310,10 +303,12 @@ class ModelsController extends Controller
         //fight
         $skill_fight_art = "";
         $skill_fights = $request->input('skill_fight_art');
-        $skill_fightsvoi = $request->input('skill_fight_art1');
 
-        foreach($skill_fights as $fight){
-            $skill_fight_art =$skill_fight_art." ". $fight.",";
+        $skill_fightsvoi = $request->input('skill_fight_art1');
+        if ($skill_fights) {
+            foreach($skill_fights as $fight){
+                $skill_fight_art =$skill_fight_art." ". $fight.",";
+            }
         }
         if($skill_fightsvoi){
             $skill_fight_art= $skill_fight_art ." ". $skill_fightsvoi;
@@ -323,8 +318,10 @@ class ModelsController extends Controller
         $skill_dances = $request->input('skill_dance');
         $skill_dancesvoi = $request->input('skill_dance1');
         $final_dance = "";
-        foreach($skill_dances as $dance){
-            $final_dance =$final_dance." ". $dance.",";
+        if ($skill_dances) {
+            foreach($skill_dances as $dance){
+                $final_dance =$final_dance." ". $dance.",";
+            }
         }
         if($skill_dancesvoi){
             $final_dance= $final_dance ." ". $skill_dancesvoi;
@@ -334,8 +331,10 @@ class ModelsController extends Controller
         $skill_instrumentals = $request->input('skill_instrumental');
         $instrument_svoi = $request->input('skill_instrumental1');
         $final_intrument = "";
-        foreach($skill_instrumentals as $instrument){
-            $final_intrument =$final_intrument." ". $instrument.",";
+        if ($skill_instrumentals) {
+            foreach($skill_instrumentals as $instrument){
+                $final_intrument =$final_intrument." ". $instrument.",";
+            }
         }
         if($instrument_svoi){
             $final_intrument= $final_intrument ." ". $instrument_svoi;
@@ -343,69 +342,81 @@ class ModelsController extends Controller
          //skill_car_ride
         $skill_car_rides = $request->input('skill_car_ride');
         $final_car = "";
-
-        foreach($skill_car_rides as $car_ride){
-            $final_car =$final_car." ". $car_ride.",";
+        if ($skill_car_rides) {
+            foreach($skill_car_rides as $car_ride){
+                $final_car =$final_car." ". $car_ride.",";
+            }
         }
         //have_work
         $have_works = $request->input('have_work');
         $final_work = "";
-
-        foreach($have_works as $work){
-            $final_work =$final_work." ". $work.",";
+        if ($have_works) {
+            foreach($have_works as $work){
+                $final_work =$final_work." ". $work.",";
+            }
         }
         //will_work
         $will_works = $request->input('will_work');
         $final_willwork = "";
-
-        foreach($will_works as $willwork){
-            $final_willwork =$final_willwork." ". $willwork.",";
+        if ($will_works) {
+            foreach($will_works as $willwork){
+                $final_willwork =$final_willwork." ". $willwork.",";
+            }
         }
         
-        if (null !== ($request->input('videos'))) {
-            return "nosdgsdgas'fgons'd664646";
-        }
-
         
-        
-        if($request->videos == ""){
-            $dataVideos = $request->videos_alt;
-            $model->videos = $dataVideos;
-            
+        $videosArr=array();
+        if ($request->videos=="") {
+            $videosm = unserialize($model->videos);
+            foreach ($videosm as $vidm) {
+                $videosArr[] = $vidm;
+            }
+           
         }
         else{
             $video = $request->videos;
-            $videoName = "";
-            $videosArr=array();
-            if ($video) {
-                foreach ($video as $videos) {
-                    $videoName = $videos->getClientOriginalName();
-                    $videos->move('images',$videoName);
-                    $videosArr[] =$videoName;
-                }
+            $videoName ="";
+            $videosm = unserialize($model->videos);
+            foreach ($videosm as $vidm) {
+                $videosArr[] = $vidm;
+            }
+            foreach ($video as $videos) {
+                
+                $videoName = $videos->getClientOriginalName();
+                $videos->move('images',$videoName);
+                $videosArr[] =$videoName;
             }
             $dataVideos = serialize($videosArr);
             $model->videos = $dataVideos;
         }
         
-        if ($request->images == "") {
-            $dataImages = $request->images_alt;
-            $model->images = $dataImages;
+
+        $imagesArr=array();
+        if ($request->images=="") {
+            $imagem = unserialize($model->images);
+            foreach ($imagem as $imgm) {
+                $imagesArr[] = $imgm;
+            }
+           
         }
         else{
             $image = $request->images;
             $imageName ="";
-            $imagesArr=array();
-            if ($image) {
-                foreach ($image as $images) {
-                    $imageName = $images->getClientOriginalName();
-                    $images->move('images',$imageName);
-                    $imagesArr[] =$imageName;
-                }
+            $imagem = unserialize($model->images);
+            foreach ($imagem as $imgm) {
+                $imagesArr[] = $imgm;
             }
+            foreach ($image as $images) {
+                
+                $imageName = $images->getClientOriginalName();
+                $images->move('images',$imageName);
+                $imagesArr[] =$imageName;
+            }
+            
             $dataImages = serialize($imagesArr);
             $model->images = $dataImages;
         }
+        
         if ($request->input('food_prefer')) {
             $model->food_prefer = $request->input('food_prefer');
         }
@@ -449,10 +460,13 @@ class ModelsController extends Controller
         $model->will_work = $final_willwork;
         
         
-
-
-        $model->save();
-        return back()->with('success','Модель успешно редактирован!');
+        if (Auth::check()) {
+            $model->save();
+            return back()->with('success','Модель успешно редактирован!');
+        }
+        else{
+            return abort(404);
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -461,10 +475,14 @@ class ModelsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        $model = Casting_model::find($id);
-        $model->delete();
-        
-        return redirect('admin/datatable')->with('success', "успешно удален!");
+        if (Auth::check()) {
+            $model = Casting_model::find($id);
+            $model->delete();
+            return redirect('admin/datatable')->with('success', "успешно удален!");
+        }
+        else{
+            return abort(404);
+        }
     }
 
     public function deleteImage(Request $request, $id){
@@ -596,5 +614,8 @@ class ModelsController extends Controller
 
         $string = " " ; 
         return view('admin/advancedsearch', compact('modelss','projects'))->with('msg', 'Поиск: ');
+    }
+    public function count(){
+        return "helomthfck";
     }
 }

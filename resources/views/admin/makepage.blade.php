@@ -15,38 +15,26 @@
             </div>
         </form>
     </div>
-    
-      
-    
 <div class="container_cart">
-
-
-@foreach($projects as $value=>$project)
+  @foreach($projects as $value=>$project)
     @foreach($project as $pro)
-    
     @endforeach
+    <div class="warp_cart">
+      <div class="cart">
+        <div class="her">
 
-    
-        <div class="warp_cart">
-          <div class="cart">
-            <div class="her">
-
-                <a href="{{action('ProjectController@destroy', $pro->project_name)}}"><i class="fas fa-trash lefttop"></i></a>
-            </div>
-            <div class="main_cart">
-              <div class="heading_cart">{{$pro->project_name}}</div>
-              <?php $counted = $projectss->where('project_id', '=', $pro->project_id)->count('project_id'); 
-                if ($counted != 0) {
-                    $counted = $counted-1;
-                }
-               ?>
-              <div class="count_cart">{{$counted}} </div>
-            </div>
-          </div>
-          <a href="{{action('ProjectController@projects', $pro->project_id)}}" class="button_press">Открыть проект</a>
+            <a href="{{action('ProjectController@destroy', $pro->project_name)}}"><i class="fas fa-trash lefttop"></i></a>
         </div>
-    
-@endforeach
+        <div class="main_cart">
+          <div class="heading_cart">{{$pro->project_name}}</div>
+          <?php $counted = $projectss->where('project_id', '=', $pro->project_id)->count('project_id'); 
+           ?>
+          <div class="count_cart">{{$counted}} </div>
+        </div>
+      </div>
+      <a href="{{action('ProjectController@projects', $pro->project_id)}}" class="button_press">Открыть проект</a>
+    </div>
+  @endforeach
 </div>
 
 @endsection

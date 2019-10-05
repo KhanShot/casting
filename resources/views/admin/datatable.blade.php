@@ -172,6 +172,7 @@
                     <?php $models = DB::table('casting_models')->orderBy('name', 'asc')->get(); ?>
                     @foreach($models as $model)
                     <?php  $images = unserialize($model->images);?>
+                    <?php  $social_acc = unserialize($model->social_acc);?>
                     <div class="worksheet_item">
                         <div class="item_checkbox">
                             <div class="checkbox w-embed">
@@ -181,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item_ava" style="background-image: url('{{ url('images', $images[0]) }}');">
+                        <div class="item_ava" style="background-image: url('@if(isset($images[0])){{ url('images', $images[0])}}@else{{ asset('images/thumb1.jpg')  }}@endif');">
                             <div class="ava_items">
                                 <div class="ava_hair_color"></div>
                                 <div class="ava_gender ">
@@ -217,7 +218,25 @@
                                 <h4 class="heading">Тел.:</h4><a href="#" class="link-3">{{$model->phone}}</a></div>
                             <div class="item_socials">
                                 <h4 class="heading">Соц. сети:</h4>
-                                <div class="social_items"><a href="#" class="insta w-inline-block"><img src="{{ url('images/instagram-3.svg')}}" width="20" alt=""></a><a href="#" class="youtube w-inline-block"><img src="{{ url('images/youtube-3.svg')}}" width="20" alt=""></a><a href="#" class="vimeo w-inline-block"><img src="{{ url('images/vimeo.svg')}}" width="20" alt=""></a></div>
+                                <div class="social_items">
+                                    @foreach($social_acc as $soc_acc)
+                                        @if (strpos($soc_acc, 'instagram.com') !== false)
+                                            <a target="_blank" href="https://www.{{$soc_acc}}" class="insta w-inline-block"><img src="{{ url('images/instagram-3.svg')}}" width="20" ></a>
+                                        @endif
+                                        @if (strpos($soc_acc, 'youtube.com') !== false)
+                                            <a target="_blank" href="https://www.{{$soc_acc}}" class="youtube w-inline-block"><img src="{{ url('images/youtube-3.svg')}}" width="20"></a>
+                                        @endif
+                                        @if (strpos($soc_acc, 'vimeo.') !== false)
+                                            <a target="_blank" href="https://www.{{$soc_acc}}" class="youtube w-inline-block"><img src="{{ url('images/youtube-3.svg')}}" width="20"></a>
+                                        @endif
+                                        @if (strpos($soc_acc, 'vk.com') !== false)
+                                            <a target="_blank" href="https://www.{{$soc_acc}}" class="insta w-inline-block"><img src="{{ url('images/vk-social.svg')}}" width="20"></a>
+                                        @endif
+                                        @if (strpos($soc_acc, 'vimeo') === false && strpos($soc_acc, 'vk.com') === false && strpos($soc_acc, 'instagram.com') === false )
+                                            <a target="_blank" href="https://www.{{$soc_acc}}" class="insta w-inline-block"><img src="{{ url('images/cursor.svg')}}" width="20"></a>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="item_city">
                                 <h4 class="heading ">Город:</h4>
@@ -229,7 +248,7 @@
                             </div>
                         </div>
                       <div class="item_details">
-                        <a href="{{action('CommentsController@detail', $model->id)}}" class="details w-inline-block">
+                        <a href="{{route('detailforadmin', $model->id)}}" class="details w-inline-block">
                             <img src="{{ url('images/Vector-1.svg')}}" alt="">
                         </a>
                         <a href="{{action('ModelsController@edit', $model->id)}}" class="btn"><i class="fa fa-edit"></i></a>

@@ -1,6 +1,4 @@
-
 @extends('admin.master')
-
 @include('admin.navbar')
 @section('content')
 
@@ -26,22 +24,22 @@
     <div class="row pb-3"><!-- first row FIO-->
       <div class="col-4">
         <label class="label">Имя</label>
-        <input required="" type="text" placeholder="Имя" class="form-control" name="name" required="" value="{{$model->name}}">
+        <input required="" type="text" placeholder="Имя" class="form-control" name="name"  value="{{$model->name}}">
       </div>
       <div class="col-4">
         <label class="label">Фамилия</label>
-        <input required="" type="text" placeholder="Фамилия" class="form-control" required="" name="surname" value="{{$model->surname}}">
+        <input required="" type="text" placeholder="Фамилия" class="form-control"  name="surname" value="{{$model->surname}}">
       </div>
       <div class="col-4">
         <label class="label">Очество</label>
-        <input required="" type="text" placeholder="Очество" class="form-control" name="fathersname" required="" value="{{$model->fathersname}}">
+        <input  type="text" placeholder="Очество" class="form-control" name="fathersname"  value="{{$model->fathersname}}">
       </div>
     </div> <!-- first row  FIO-->
     <!-- contacts info -->
     <div class="row pb-3">
       <div class="col-4">
         <label class="label">Адрес</label>
-        <input required="" type="text" name="city" placeholder="Город" class="form-control" list="city"  value="{{$model->city}}" >
+        <input  type="text" name="city" placeholder="Город" class="form-control" list="city"  value="{{$model->city}}" >
         <datalist id="city">
           <option value="Алматы">
           <option value="Нур-Султан">
@@ -56,25 +54,25 @@
 
         <div class="col-2">
           <label class="label">Адрес</label>
-          <input required="" type="text" placeholder="Адрес" class="form-control" name="address" value="{{$model->address}}">
+          <input  type="text" placeholder="Адрес" class="form-control" name="address" value="{{$model->address}}">
         </div>
     
       
         <div class="col-2">
           <label class="label">Почта</label>
-          <input required="" type="email" placeholder="Почта" class="form-control" name="email" required="" value="{{$model->email}}">
+          <input  type="email" placeholder="Почта" class="form-control" name="email"  value="{{$model->email}}">
         </div>
       
         <div class="col-2">
           <label class="label">Телефон номер</label>
-          <input required="" type="tel" placeholder="Телефон номер" class="form-control" name="phone" value="{{$model->phone}}">
+          <input  type="tel" placeholder="Телефон номер" class="form-control" name="phone" value="{{$model->phone}}">
         </div>
      
 
       
         <div class="col-2">
           <label class="label">социальные аккаунты</label>
-          <input required="" type="text" name="social_acc" placeholder="социальные аккаунты, через запятую" class="form-control" list="social_acc" multiple  value="{{$model->social_acc}}">
+          <input  type="text" name="social_acc" placeholder="социальные аккаунты, через запятую" class="form-control" list="social_acc" multiple  value="{{$model->social_acc}}">
           <datalist id="social_acc">
             <option value="instagram.com/">
             <option value="vk.com/">
@@ -151,15 +149,15 @@
 
         <div class="col">
            <label class="la-label">Возраст</label>
-          <input required="" type="number" placeholder="Возраст" class="form-control" name="age" value="{{$model->age}}">
+          <input  type="number" placeholder="Возраст" class="form-control" name="age" value="{{$model->age}}">
         </div>
         <div class="col">
            <label class="la-label">Рост </label>
-          <input required="" type="number" placeholder="Рост" class="form-control" name="height" value="{{$model->height}}">
+          <input  type="number" placeholder="Рост" class="form-control" name="height" value="{{$model->height}}">
         </div>
         <div class="col">
            <label class="la-label">Вес</label>
-          <input required="" type="number" placeholder="Вес" class="form-control" name="weight" value="{{$model->weight}}">
+          <input  type="number" placeholder="Вес" class="form-control" name="weight" value="{{$model->weight}}">
         </div>
     </div><!-- rest info1 -->
   
@@ -234,7 +232,7 @@
       </div>
       <div class="col">
         <label class="la-label">Размер обуви </label>
-        <input required="" type="text" name="foot_size" placeholder="Размер обуви" class="form-control" list="foot_size" value="{{$model->foot_size}}" >
+        <input  type="text" name="foot_size" placeholder="Размер обуви" class="form-control" list="foot_size" value="{{$model->foot_size}}" >
         <datalist id="foot_size">
           <option value="41">
           <option value="40">
@@ -245,7 +243,7 @@
 
       <div class="col">
         <label class="la-label">Тип внешности</label>
-        <input required="" type="text" name="appearance" placeholder="выберите или напишите сами" class="form-control" list="appearance" value="{{$model->appearance}}">
+        <input  type="text" name="appearance" placeholder="выберите или напишите сами" class="form-control" list="appearance" value="{{$model->appearance}}">
         <datalist id="appearance">
           <option value="европейский">
           <option value="азиатский">
@@ -255,7 +253,7 @@
 
       <div class="col">
         <label class="la-label">Цвет волос</label>
-        <input required="" type="text" name="color_hair" placeholder="выберите или напишите сами" class="form-control" list="color_hair" value="{{$model->color_hair}}" >
+        <input  type="text" name="color_hair" placeholder="выберите или напишите сами" class="form-control" list="color_hair" value="{{$model->color_hair}}" >
         <datalist id="color_hair">
           <option value="Брюнет">
           <option value="Блондин">
@@ -265,7 +263,7 @@
       </div>
       <div class="col">
         <label class="la-label">цвет глаз</label>
-        <input required="" type="text" name="color_eyes"  placeholder="выберите или напишите сами" class="form-control" list="color_eyes" value="{{$model->color_eyes}}">
+        <input  type="text" name="color_eyes"  placeholder="выберите или напишите сами" class="form-control" list="color_eyes" value="{{$model->color_eyes}}">
         <datalist id="color_eyes">
           <option value="Карий">
           <option value="Синий">
@@ -275,11 +273,11 @@
       </div>
       <div class="col">
         <label class="la-label">Профессия</label>
-        <input required="" type="text" placeholder="образование" class="form-control" name="profession" value="{{$model->profession}}">
+        <input  type="text" placeholder="образование" class="form-control" name="profession" value="{{$model->profession}}">
       </div>
       <div class="col">
         <label class="la-label">Текущее место работы </label>
-        <input required="" type="text" placeholder="Текущее место работы" class="form-control" name="current_work" value="{{$model->current_work}}">
+        <input  type="text" placeholder="Текущее место работы" class="form-control" name="current_work" value="{{$model->current_work}}">
       </div>
     </div><!-- rest info2 -->
   </div>
@@ -459,7 +457,7 @@
     
         <div class="col-3">
           <label class="">Вокал</label> 
-          <input required="" type="text" placeholder="Вокал" class="form-control" name="skill_vocal" value="{{$model->skill_vocal}}">
+          <input  type="text" placeholder="Вокал" class="form-control" name="skill_vocal" value="{{$model->skill_vocal}}">
         </div>
        
         <div class="col-3">
@@ -547,24 +545,24 @@
       
         <div class="col-3">
           <label>Другие навыки</label> 
-          <input required="" type="text" placeholder="Другие навыки" class="form-control" name="skill_else" value="{{$model->skill_else}}">
+          <input  type="text" placeholder="Другие навыки" class="form-control" name="skill_else" value="{{$model->skill_else}}">
         </div>
       
         <div class="col-3">
           <label>Знание языков (указать уровни владения)</label> 
-          <input required="" type="text" placeholder="Знание языков (указать уровни владения)" class="form-control" name="languages" value="{{$model->languages}}">
+          <input  type="text" placeholder="Знание языков (указать уровни владения)" class="form-control" name="languages" value="{{$model->languages}}">
         </div>
         <div class="col-3">
           <label>Предпочтение в еде</label> 
-          <input required="" type="text" placeholder="Предпочтение в еде" class="form-control" name="food_prefer" value="{{$model->food_prefer}}">
+          <input  type="text" placeholder="Предпочтение в еде" class="form-control" name="food_prefer" value="{{$model->food_prefer}}">
         </div>
         <div class="col-3">
           <label>Аллергия</label> 
-          <input required="" type="text" placeholder="Аллергия" class="form-control" name="allergy" value="{{$model->allergy}}">
+          <input  type="text" placeholder="Аллергия" class="form-control" name="allergy" value="{{$model->allergy}}">
         </div>
         <div class="col-3">
           <label>Заболевании</label> 
-          <input required="" type="text" placeholder="Заболевании" class="form-control" name="illness" value="{{$model->illness}}">
+          <input  type="text" placeholder="Заболевании" class="form-control" name="illness" value="{{$model->illness}}">
         </div>
     </div><!-- rest info3 -->
   </div>
@@ -573,16 +571,16 @@
   <div class="row pb-3"><!-- rest info4 -->
      <div class="col-3">
       <label>Опыт работы в кино на TV</label> 
-        <input required="" type="text" placeholder="Опыт работы в кино на TV" class="form-control" name="job_experience_tv" value="{{$model->job_experience_tv}}">
+        <input  type="text" placeholder="Опыт работы в кино на TV" class="form-control" name="job_experience_tv" value="{{$model->job_experience_tv}}">
       </div>
       <div class="col-3">
         <label>Опыт работы в театре</label> 
-        <input required="" type="text" placeholder="Опыт работы в театре" class="form-control" name="job_experience_teatr" value="{{$model->job_experience_teatr}}">
+        <input  type="text" placeholder="Опыт работы в театре" class="form-control" name="job_experience_teatr" value="{{$model->job_experience_teatr}}">
       </div>
    
       <div class="col-3">
         <label>О себе</label> 
-        <textarea  required="" type="text" placeholder="О себе " class="form-control" name="about_you">{{$model->about_you}}</textarea>
+        <textarea   type="text" placeholder="О себе " class="form-control" name="about_you">{{$model->about_you}}</textarea>
     
       </div>
     
@@ -665,12 +663,12 @@
       <div class="col" >
         <label>Загрузить Фото</label>
         <input type="file" id="file-1" name="images[]" multiple=""  data-browse-on-zone-click="true"  data-preview-file-type="text" >
-        <input type="hidden" name="images_alt" value="{{$model->images}}">
+        
       </div>
       <div class="col">
         <label>Загрузить Видео</label>
         <input type="file" id="file-2" name="videos[]" multiple="" >
-        <input type="hidden" name="videos_alt" value="{{$model->videos}}">
+        
       </div>
     </div>
   </div>

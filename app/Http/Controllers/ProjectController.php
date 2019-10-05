@@ -22,10 +22,12 @@ class ProjectController extends Controller{
         $pages = DB::table('formedpage')->distinct('page_id')->count('page_id');
             
         $models = Casting_model::get()->count();
-
-
-
-    	return view('admin.makepage', compact('projects', 'projectss'));
+        if (Auth::check()) { 
+    	   return view('admin.makepage', compact('projects', 'projectss'));
+        }
+        else{
+            return abort(404);
+        }
     }
     public function store(Request $request){
     $project_id =  Projects::max('project_id');
@@ -36,8 +38,14 @@ class ProjectController extends Controller{
     		'project_name' => $project_name,
     	);
     	
-    	Projects::create($project);
-    	return back()->with('success','created');
+        if (Auth::check()) {
+    	   Projects::create($project);
+            
+    	   return back()->with('success','created');
+        }
+        else{
+            return abort(404);
+        }
     }
     public function projects($id){
     	$projects = DB::table('projects')
@@ -63,45 +71,39 @@ class ProjectController extends Controller{
     	$user_id = $request->input('user_id');
 
         //rezh_rate
-    	if($request->has('rezh_rate')){
-    		$rezh_rate = $request->input('rezh_rate');
-    	}else{
-    		$rezh_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $user_id)->avg('rezh_rate');
-    	}
-
+    	$rezh_rate = $request->input('rezh_rate');
         //produser_rate
-        if($request->has('produser_rate')){
-            $produser_rate = $request->input('produser_rate');
-        }else{
-            $produser_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $user_id)->avg('produser_rate');
-        }
+        
+        $produser_rate = $request->input('produser_rate');
+        $sezh_rate = $request->input('sezh_rate');
+        
         //client rate
-        if($request->has('client_rate')){
-            $client_rate = $request->input('client_rate');
-        }else{
-            $client_rate = Notes::where('project_id',$project_id)->where('page_id',$page_id)->where('user_id', $user_id)->avg('client_rate');
-        }
-
-
-
+        
+        $client_rate = $request->input('client_rate');
 
     	if($request->has('comment')){
     		$comment = $request->input('comment');
     	}else{
     		$comment = "";
     	}
+        $admin_comment = $request->input('admin_comment');
 
-
-    	DB::insert('insert into notes (project_id, page_id, user_id, rezh_rate, produser_rate, client_rate, comment) values (?, ?, ?, ?, ?, ?, ?)', [$project_id, $page_id, $user_id, $rezh_rate, $produser_rate, $client_rate, $comment ]);
+    	DB::insert('insert into notes (project_id, page_id, user_id, rezh_rate, produser_rate, client_rate, comment, admin_comment) values (?, ?, ?, ?, ?, ?, ?, ?)', [$project_id, $page_id, $user_id, $rezh_rate, $produser_rate, $client_rate, $comment, $admin_comment]);
     	return back();
     }
     public function StoreAll(Request $request){
     	return back();
     }
     public function destroy($name){
-        $project = Projects::where('project_name', '=', $name);
-        $project->delete();
-        
-        return back()->with('success', "успешно удален!");
+        if (Auth::check()) {
+            $project = Projects::where('project_name', '=', $name);
+            $project->delete();
+            return back()->with('success', "успешно удален!");
+        }
+        else{
+            return abort(404);
+        }
     }
+
+    
 }
