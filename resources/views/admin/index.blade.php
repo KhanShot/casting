@@ -2,7 +2,36 @@
 
 @include('admin.navbar')
 @section('content')
-<div class="section">
+<div class="content">
+  <div class="block_main_content">
+    <div class="container">
+      <div class="item_cart_warp">
+        <div class="item_cart">
+          <div class="info_cart">
+            <div class="text-block">Анкеты</div>
+            <div class="text-block-2">{{$models}}</div>
+          </div>
+          <div class="text-block-3"><a href="{{route('datatable')}}">Перейти</a></div>
+        </div>
+        <div class="item_cart">
+          <div class="info_cart">
+            <div class="text-block">СТРАНИЦЫ<br></div>
+            <div class="text-block-2">{{$pages}}</div>
+          </div>
+          <div class="text-block-3"><a href="{{route('allpages')}}">Перейти</a></div>
+        </div>
+        <div class="item_cart">
+          <div class="info_cart">
+            <div class="text-block">Проекты</div>
+            <div class="text-block-2">5</div>
+          </div>
+          <div class="text-block-3"><a href="{{route('projects')}}">Перейти</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="section">
     <div class="container">
       <div class="container_cart elsecontainer_cart">
         <div class="warp_cart">
@@ -32,7 +61,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 @endsection
 

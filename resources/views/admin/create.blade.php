@@ -1,52 +1,21 @@
 @extends('admin.master')
-<style type="text/css">
-  /* The Modal (background) */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
-  /* Modal Content/Box */
-  .modal-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%!important; /* Could be more or less, depending on screen size */
-  }
-
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-</style>
 
 @include('admin.navbar')
 @section('content')
 
-<h2>Добавить моделя</h2><br  />
+<style type="text/css">
+  article {
+    width: 80%;
+    margin:auto;
+    margin-top:10px;
+}
+.thumbnail {
+    height: 100px;
+    margin: 10px;
+}
+</style>
 @if ($errors->any())
+
 <div class="alert alert-danger">
     <ul>
         @foreach ($errors->all() as $error)
@@ -60,380 +29,415 @@
     <p>{{ \Session::get('success') }}</p>
 </div><br />
 @endif
-<form method="post" action="{{url('admin')}}" enctype="multipart/form-data">
-  {{csrf_field()}}
-  
-  <div class="bg-gray">
-    <div class="row pb-3"><!-- first row FIO-->
-      <div class="col-4">
-        <label class="la-label" >Имя</label>
-        <input required="" type="text" placeholder="Имя" class="form-control" name="name" >
-      </div>
-      <div class="col-4">
-        <label class="la-label">фамилия</label>
-        <input required="" type="text" placeholder="Фамилия" class="form-control"  name="surname">
-      </div>
-      <div class="col-4">
-        <label class="la-label" >Очество</label>
-        <input required="" type="text" placeholder="Очество" class="form-control" name="fathersname" >
-      </div>
-    </div> <!-- first row  FIO-->
-    <!-- contacts info -->
-    <div class="row pb-3">
-      <div class="col-4">
-        <label class="la-label">Город</label>
-        <input  type="text" name="city" placeholder="Город" class="form-control" list="city" >
-        <datalist id="city">
-          <option value="Алматы"></option>
-          <option value="Нур-Султан"></option>
-          <option value="Караганда"></option>
-          <option value="Актау"></option>
-          <option value="Семей"></option>
-          <option value="Усткеменагорскь"></option>
-          <option value="Петропавл"></option>
-          <option value="Талдыкорган"></option>
-        </datalist>
-      </div>
-
-        <div class="col-2">
-          <label class="la-label">Адрес</label>
-          <input  type="text" placeholder="Адрес" class="form-control" name="address">
+<div class="block_anketa">
+  <form method="post" action="{{ route('admin.store')}}" enctype="multipart/form-data" >
+    {{ csrf_field() }}
+    <div class="anketa_warp">
+      <div class="container">
+        <h1 class="heading_page">Добавить анкету</h1>
+        <div class="form-block w-form">
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Имя</strong><br>
+            </label>
+            <input required="" type="text" class="text-field w-input" name="name" placeholder="Имя">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Фамилия</strong><br>
+            </label>
+            <input required="" type="text" class="text-field w-input" name="surname" placeholder="Фамилия">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Отчество</strong><br>
+            </label>
+            <input type="text" class="text-field w-input" name="fathersname" placeholder="Отчество">
+          </div>
         </div>
-    
-      
-        <div class="col-2">
-          <label class="la-label">Почта</label>
-          <input  type="email" placeholder="Почта" class="form-control" name="email" >
-        </div>
-      
-        <div class="col-2">
-          <label class="la-label">Телефон номер</label>
-          <input  type="tel" placeholder="Телефон номер" class="form-control" name="phone">
-        </div>
-     
-
-      
-        <div class="col-2">
-        
-          <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-              <span class="close">&times;</span>
-            <div class="modal-content" >
-              <div class="col-8">
-                <p><label>Вконтакте</label></p>
-                <p><input type="text" class="form-control" id="vk" name="socc_vk" value="vk.com/"></p>
-              </div>
-              <div class="col-8">
-                <p><label>Instagram</label></p>
-                <p><input type="text" class="form-control" id="inst" name="socc_insta" value="instagram.com/"></p>
-              </div>
-              <div class="col-8">
-                <p><label>Другие</label></p>
-                <p><input type="text" class="form-control" id="ano" name="socc_ano" placeholder="another link here"></p>
+      </div>
+    </div>
+    <div class="anketa_warp last_form">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Город</strong><br>
+            </label><input type="text" class="text-field w-input" name="city" placeholder="Город">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Адрес</strong><br>
+            </label>
+            <input type="text" class="text-field min_input w-input" name="address" placeholder="Адрес">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Почта</strong><br>
+            </label>
+            <input required="" type="email" class="text-field min_input w-input" name="email" placeholder="Почта">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Контактный номер</strong><br>
+            </label>
+            <input required="" type="text" class="text-field min_input w-input" name="phone" placeholder="Номер телефона">
+          </div>
+          <div class="warp_form">
+            <label class="field-label" >
+              <strong class="bold-text">Социальные аккаунты</strong><br>
+            </label>
+            <input type="text" class="text-field min_input w-input" id="social_acc" name="social_acc" placeholder="Социальные аккаунты">
+            <div id="myModal" class="modal">
+              <div class="modal-content">
+                <div class="socials">
+                  <div class="social">
+                    <label class="field-label">insta</label>
+                    <input type="text" id="socc_insta" class="text-field min_input w-input" name="socc_insta" value="instagram.com/">
+                  </div>
+                  <div  class="social">
+                    <label class="field-label">Vk</label>
+                    <input type="text" id="socc_vk" class="text-field min_input w-input" name="socc_vk" value="vk.com/">
+                  </div>
+                  <div  class="social">
+                    <label class="field-label">Другое</label>
+                    <input type="text" class="text-field min_input w-input" id="socc_ano" name="socc_ano" placeholder="URL here">
+                  </div>
+                </div>
+                <span class="close">&times;</span>
+                
               </div>
             </div>
-
           </div>
-          <label id="clickact">Социальные аккаунтsы</label>
-          <input id="myBtn" type="text" name="social_acc" class="form-control"  >
-    
         </div>
-    </div><!-- contacts info -->
-    <div class="row pb-3"> <!-- rest info1 -->
-        <div class="col-2">
-         <label class="la-label">Тип Анкеты</label>
-          <SELECT placeholder="" class="form-control" name="model_type">
-            <option value="">Тип Анкеты</option>
-            <option value="Актер">Актер</option>
-            <option value="Профессиональный актер">Профессиональный актер</option>
-            <option value="Массовка">Массовка</option>
-            <option value="Без опыта">Без опыта</option>
-          </SELECT>
-        </div>
-        <div class="col-2">
-          <label class="la-label">Пол</label>
-          <SELECT placeholder="" class="form-control" name="gender">
-            <option value="">Пол</option>
-            <option value="Мужской">Мужской</option>
-            <option value="Женский">Женский</option>
-          </SELECT>
-        </div>
-        <div class="col-2">
-          <label class="la-label">Имеете загран. паспорт?</label>
-          
-          <SELECT placeholder="Имеете ли вы загран. паспорт?" class="form-control" name="pasport">
-            <option value="Нет">Нет</option>
-            <option value="Да">Да</option>
-          </SELECT>
-        </div>
-        <div class="col-2">
-          <label class="la-label">командировки в другие города и страны</label>
-         
-          <SELECT  class="form-control" name="can_go_abroad">
-
-            <option value="Нет">Нет</option>
-            <option value="Да">Да</option>
-          </SELECT>
-        </div>
-
-        <div class="col">
-           <label class="la-label">Возраст</label>
-          <input  type="number" placeholder="Возраст" class="form-control" name="age">
-        </div>
-        <div class="col">
-           <label class="la-label">Рост </label>
-          <input  type="number" placeholder="Рост" class="form-control" name="height">
-        </div>
-        <div class="col">
-           <label class="la-label">Вес </label>
-          <input  type="number" placeholder="Вес" class="form-control" name="weight">
-        </div>
-    </div><!-- rest info1 -->
-  
-
-    <div class="row pb-3"><!-- rest info2 -->
-      <div class="col">
-        <label class="la-label">Тип телосложения </label> 
-        <SELECT  class="form-control" name="body">
-          <option value="худой">худой</option>
-          <option value="нормальный">нормальный</option>
-          <option value="атлетический">атлетический</option>
-          <option value="в теле">в теле</option>
-          <option value="полный">полный</option>
-        </SELECT>
-      </div>
-    
-   
-      <div class="col">
-        <label class="la-label">Размер одежды </label> 
-        <SELECT  class="form-control" name="clothes_size">
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L  </option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
-        </SELECT>
-      </div>
-      <div class="col">
-        <label class="la-label">Размер обуви </label>
-        <input  type="text" name="foot_size" placeholder="Размер обуви" class="form-control" list="foot_size" >
-        <datalist id="foot_size">
-          <option value="41"></option>
-          <option value="40"></option>
-          <option value="39"></option>
-          <option value="38"></option>
-        </datalist>
-      </div>
-
-      <div class="col">
-        <label class="la-label">Тип внешности</label>
-        <input  type="text" name="appearance" placeholder="выберите или напишите сами" class="form-control" list="appearance" >
-        <datalist id="appearance">
-          <option value="европейский"></option>
-          <option value="азиатский"></option>
-          <option value="евразийский"></option>
-          <option value="афро"></option>
-        </datalist>
-
-      </div>
-
-      <div class="col">
-        <label class="la-label">Цвет волос</label>
-        <input  type="text" name="color_hair" placeholder="выберите или напишите сами" class="form-control" list="color_hair" >
-        <datalist id="color_hair">
-          <option value="Брюнет"></option>
-          <option value="Блондин"></option>
-          <option value="Рыжий"></option>
-          <option value="Шатен"></option>
-          <option value="Седой"></option>
-        </datalist>
-      </div>
-      <div class="col">
-        <label class="la-label">цвет глаз</label>
-        <input  type="text" name="color_eyes"  placeholder="выберите или напишите сами" class="form-control" list="color_eyes" >
-        <datalist id="color_eyes">
-          <option value="Карий"></option>
-          <option value="Синий"></option>
-          <option value="Голубой"></option>
-          <option value="Чёрный"></option>
-          <option value="Болотный"></option>
-        </datalist>
-      </div>
-      <div class="col">
-        <label class="la-label">Профессия</label>
-        <input  type="text" placeholder="образование" class="form-control" name="profession">
-      </div>
-      <div class="col">
-        <label class="la-label">Текущее место работы </label>
-        <input  type="text" placeholder="Текущее место работы" class="form-control" name="current_work">
-      </div>
-    </div><!-- rest info2 -->
-  </div>
-  <div class="bg-ano">
-    <label class="form-heading pb-3 pt-3">Дополнительные навыки</label>
-      
-      
-    <div class="row pb-3"><!-- rest info3 -->
-      
-        <div class="col-3">
-          
-          <label for="skill_sport" class="form-text">Спорт:</label>
-          <label><input type="checkbox" name="skill_sport[]" value="атлетика">атлетика</label>
-          <label><input type="checkbox" name="skill_sport[]" value="плавание">плавание</label>
-          <label><input type="checkbox" name="skill_sport[]" value="гольф">гольф</label>
-          <label><input type="checkbox" name="skill_sport[]"  value="футбол">футбол</label>
-          <label><input type="checkbox" name="skill_sport[]"  value="Настольный теннис">Настольный теннис</label>
-          <input  type="text" placeholder="или укажите свой (Спорт)" class="form-control" name="skill_sport1">
-        </div>
-     
-        <div class="col-3">
-          <label for="skill_fight_art" class="form-text">Боевые искусства:</label>
-          <label><input type="checkbox" name="skill_fight_art[]" value="бокс."> бокс</label>
-          <label><input type="checkbox" name="skill_fight_art[]" value="тхэквондо">тхэквондо</label>
-          <label><input type="checkbox" name="skill_fight_art[]" value="Карате">Карате</label>
-          <label><input type="checkbox" name="skill_fight_art[]"  value="Дзюдо">Дзюдо</label>
-          <label><input type="checkbox" name="skill_fight_art[]"  value="боевое самбо">боевое самбо</label>
-          <input  type="text" placeholder="или укажите свой (Боевые искусства)" class="form-control" name="skill_fight_art1">
-        </div>
-
-        <div class="col-3">
-          <label for="skill_dance" class="form-text">Танцы:</label>
-          <label><input type="checkbox" name="skill_dance[]" value="Хип-Хоп.">Хип-Хоп</label>
-          <label><input type="checkbox" name="skill_dance[]" value="Shuffle, House, ElectroDance, Tecktonik">Танго</label>
-          <label><input type="checkbox" name="skill_dance[]" value="Бальные танцы">Бальные танцы</label>
-          <label><input type="checkbox" name="skill_dance[]"  value="Танец живота">Танец живота</label>
-          <label><input type="checkbox" name="skill_dance[]"  value="Восточный танец">Восточный танец</label>
-          <input  type="text" placeholder="или укажите свой (Танцы)" class="form-control" name="skill_dance1">
-        </div>
-       
-        <div class="col-3">
-          <label for="skill_instrumental" class="form-text">Музыкальные инструменты:</label>
-          <label><input type="checkbox" name="skill_instrumental[]" value="бокс.">Домбыра</label>
-          <label><input type="checkbox" name="skill_instrumental[]" value="Қобыз">Қобыз</label>
-          <label><input type="checkbox" name="skill_instrumental[]" value="Пиано">Пиано</label>
-          <label><input type="checkbox" name="skill_instrumental[]"  value="Флейта">Флейта</label>
-          <label><input type="checkbox" name="skill_instrumental[]"  value="Барабан">Барабан</label>
-          <label><input type="checkbox" name="skill_instrumental[]"  value="Саксафон">Саксафон</label>
-          <input  type="text" placeholder="или укажите свой (Музыкальные инструменты)" class="form-control" name="skill_instrumental1">
-        </div>
-    
-        <div class="col-3">
-          <label class="">Вокал</label> 
-          <input  type="text" placeholder="Вокал" class="form-control" name="skill_vocal">
-        </div>
-       
-        
-      
-        <div class="col-3">
-          <label>Верховая езда </label> 
-          <SELECT  class="form-control mb-3" name="skill_horse_ride">
-            <option value="Отлично">Отлично</option>
-            <option value="Хорошо">Хорошо</option>
-            <option value="Средне">Средне</option>
-            <option value="Плохо">Плохо</option>
-            <option value="Очень плохо">Очень плохо</option>
-          </SELECT>
-        </div>
-      
-        <div class="col-3">
-          <label>Другие навыки</label> 
-          <textarea  type="text" placeholder="Другие навыки" class="form-control" name="skill_else" rows="4"></textarea>
-        </div>
-      
-        <div class="col-3">
-          <label>Знание языков (указать уровни владения)</label> 
-          <input  type="text" placeholder="Знание языков (указать уровни владения)" class="form-control" name="languages">
-        </div>
-        <div class="col-3">
-          
-            <label for="skill_sport" class="form-text">Вождение автомобиля/иного транспорта:</label>
-            <label><input type="checkbox" name="skill_car_ride[]" value="А - мотоциклы">А - мотоциклы</label>
-            <label><input type="checkbox" name="skill_car_ride[]" value="B - легковые автомобили">B - легковые автомобили</label>
-            <label><input type="checkbox" name="skill_car_ride[]" value="C - грузовые автомобили">C - грузовые автомобили</label>
-            <label><input type="checkbox" name="skill_car_ride[]"  value="D - автобусы">D - автобусы</label>
-            <label><input type="checkbox" name="skill_car_ride[]"  value="М - мопеды">М - мопеды</label>
-          
-            <input type="text" name="skill_car_ride1" class="form-control" placeholder="или укажите свой">
-          
-        </div>
-        <div class="col-3">
-            <label>Предпочтение в еде</label> 
-            <input type="text" placeholder="Не обязательно" class="form-control" name="food_prefer">
-          </div>
-          <div class="col-3">
-            <label>Аллергия</label> 
-            <input type="text" placeholder="Если есть(не обязательно)" class="form-control" name="allergy">
-          </div>
-          <div class="col-3">
-            <label>Заболевании</label> 
-            <input type="text" placeholder="Если есть(не обязательно)" class="form-control" name="illness">
-          </div>
-    </div><!-- rest info3 -->
-  </div>
-  <div class="bg-gray">
-  <div class="row pb-3"><!-- rest info4 -->
-     <div class="col-3">
-        <label>Опыт работы в кино на TV</label> 
-        <input  type="text" placeholder="Опыт работы в кино на TV" class="form-control" name="job_experience_tv">
-      </div>
-      <div class="col-3">
-        <label>Опыт работы в театре</label> 
-        <input  type="text" placeholder="Опыт работы в театре" class="form-control" name="job_experience_teatr">
-      </div>
-   
-      <div class="col-3">
-        <label>О себе</label> 
-        <textarea   type="text" placeholder="О себе" class="form-control" name="about_you" rows="4"></textarea>
-    
-      </div>
-    
-      <div class="col-3">
-        <label for="can_naked">Готовы ли сниматься обнаженными?</label> 
-        <SELECT  class="form-control mb-3" name="can_naked">
-          <option value="ДА">Да</option>
-          <option value="В белье">В белье</option>
-          <option value="В топике">В топике</option>
-          <option value="Нет">Нет</option>
-        </SELECT>
-      </div>
-
-      <div class="col-3">
-        <label for="have_work">Работаете ли вы?..(указать нужное)</label>
-        <label><input type="checkbox" name="have_work[]" value="Aктер">Aктер</label>
-        <label><input type="checkbox" name="have_work[]" value="Профессиональный актер">Профессиональный актер</label>
-        <label><input type="checkbox" name="have_work[]" value="Модель">Модель</label>
-      </div>
-
-      <div class="col-3">
-        <label for="will_work" class="form-text">Готовы ли вы работать?..(указать нужное):</label>
-        <label><input type="checkbox" name="will_work[]" value="Модель отдельной части тела">Модель отдельной части тела</label>
-        <label><input type="checkbox" name="will_work[]" value="Актер эпизода">Актер эпизода</label>
-        <label><input type="checkbox" name="will_work[]" value="Актер массовых сцен">Актер массовых сцен</label>
-      </div>
-  </div><!-- rest info4 -->
-  </div>
-
-  <div class="bg-ano">
-    <div class="row">
-      
-      <div class="col" >
-        <label>Загрузить Фото(<small>только фото</small>)</label>
-        <input  type="file" id="input-1"  name="images[]" multiple accept="image/*" data-preview-file-type="text">
-      </div>
-      <div class="col">
-        <label>Загрузить Видео(<small>только видео</small>)</label>
-        <input  type="file" id="input-2" name="videos[]" accept="video/*" multiple data-preview-file-type="text" >
       </div>
     </div>
-  </div>
-  <label for="input-25">Planets and Satellites</label>
-
-    <div class="d-flex justify-content-center m-5">
-      
-        <button type="submit" class="btn btn-success block">Добавить модель</button>
+    <div class="anketa_warp last_form white_block">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Тип анкеты</strong><br>
+            </label>
+            <select name="model_type" class="select-field w-select">
+              <option>Тип анкеты</option>
+              <option value="Проф. Актер">Проф. Актер</option>
+              <option value="Актер">Актер</option>
+              <option value="Массовка">Массовка</option>
+              <option value="Без опыта">Без опыта</option>
+            </select>
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Пол</strong><br>
+            </label>
+            <select name="gender" class="select-field w-select">
+              <option>Пол</option>
+              <option value="Мужской">Мужской</option>
+              <option value="Женский">Женский</option>
+            </select>
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Загранпаспорт</strong><br>
+            </label>
+            <select name="pasport" class="select-field w-select">
+              <option value="Нет">Нет</option>
+              <option value="Да">Да</option>
+            </select>
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Готов к командировкам</strong><br>
+            </label>
+            <select name="can_go_abroad" class="select-field w-select">
+              <option value="Нет">Нет</option>
+              <option value="Да">Да</option>
+            </select>
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Возраст</strong><br>
+            </label>
+            <input type="number" class="text-field min_input w-input" name="age" placeholder="Возраст">
+          </div>
+          <div class="warp_form">
+            <label class="field-label"><strong class="bold-text">Рост</strong><br>
+            </label><input type="number" class="text-field min_input w-input" name="height" placeholder="Рост">
+          </div>
+          <div class="warp_form">
+            <label class="field-label">
+              <strong class="bold-text">Вес</strong><br>
+            </label>
+            <input type="number" class="text-field min_input w-input" name="weight" placeholder="Вес">
+          </div>
+        </div>
+      </div>
     </div>
+    <div  class="anketa_warp last_form">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form">
+            <label class="field-label"><strong class="bold-text">Тип телосложения</strong><br></label>
+            <select name="body" class="select-field w-select">
+              <option value="Худой">Худой</option>
+              <option value="Нормальный">Нормальный</option>
+              <option value="Атлетический">Атлетический</option>
+              <option value="В теле">В теле</option>
+              <option value="Полный">Полный</option>
+            </select>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Размер одежды</strong><br></label>
+            <select name="clothes_size" class="select-field w-select">
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="M">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Размер обуви</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="foot_size" placeholder="Размер обуви"  list="foot_size">
+            <datalist id="foot_size">
+              <option value="41"></option>
+              <option value="40"></option>
+              <option value="39"></option>
+              <option value="38"></option>
+            </datalist>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Тип внешности</strong><br></label>
+            <select name="appearance" class="select-field w-select">
+              <option value="Европейской">Европейской</option>
+              <option value="Азиатской">Азиатской</option>
+              <option value="Евразийской">Евразийской</option>
+              <option value="Афра">Афра</option>
+            </select>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Цвет волос</strong><br></label>
+            <input  type="text" name="color_hair" placeholder="выберите или напишите сами" class="select-field w-select" list="color_hair">
+            <datalist id="color_hair">
+              <option value="Брюнет"></option>
+              <option value="Блондин"></option>
+              <option value="Рыжий"></option>
+              <option value="Шатен"></option>
+              <option value="Седой"></option>
+            </datalist>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Цвет глаз</strong><br></label>
+            <input  type="text" name="color_eyes"  placeholder="выберите или напишите сами" class="select-field w-select" list="color_eyes" >
+            <datalist id="color_eyes">
+              <option value="Карий"></option>
+              <option value="Синий"></option>
+              <option value="Голубой"></option>
+              <option value="Чёрный"></option>
+              <option value="Болотный"></option>
+            </datalist>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Профессия</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="profession" placeholder="Профессия">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Текущее место работы</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="current_work" placeholder="Текущее место работы">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form white_block">
+      <div class="container">
+        <h1 class="heading_page">Дополнительные навыки</h1>
+        <div class="form-block w-form">
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Спорт</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="skill_sport" placeholder="Спорт">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Боевые искусства</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="skill_fight_art" placeholder="Боевые искусства">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Танцы</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="skill_dance" placeholder="Танцы">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Музыкальные инструменты</strong><br></label>
+            <input type="text" class="text-field min_input line_bat w-input" name="skill_instrumental" placeholder="Музыкальные инструменты">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Вокал</strong><br></label>
+            <input type="text" class="text-field min_input w-input" name="skill_vocal" placeholder="Вокал">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Верховая езда</strong><br></label>
+            <select name="skill_horse_ride" class="select-field w-select">
+              <option value="Отлично">Отлично</option>
+              <option value="Хорошо">Хорошо</option>
+              <option value="Средне">Средне</option>
+              <option value="Плохо">Плохо</option>
+              <option value="Очень плохо">Очень плохо</option>
+            </select>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Другие навыки</strong><br></label>
+            <textarea name="skill_else" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Знание языков</strong><br></label>
+            <textarea name="languages" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form white_block">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form"><label class="field-label">
+            <strong class="bold-text">Водительское удостоверение</strong><br></label>
+            <label class="w-checkbox"><input type="checkbox" name="skill_car_ride[]" value="А - Мотоцикл" class="w-checkbox-input">
+              <span class="checkbox-label w-form-label">A - Мотоцикл</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="skill_car_ride[]" value="B - Легковые автомобили">
+              <span class="checkbox-label w-form-label">B - Легковые автомобили</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="skill_car_ride[]" value="C - Грузовые автомобили">
+              <span class="checkbox-label w-form-label">С - Грузовые автомобили</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="skill_car_ride[]"  value="D - Автобусы">
+              <span class="checkbox-label w-form-label">D - Автобусы</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="skill_car_ride[]"  value="М - Мопеды">
+              <span class="checkbox-label w-form-label">М - Мопеды</span>
+            </label>
+            <input type="text" class="text-field min_input transport_m w-input" name="skill_car_ride1" placeholder="Указать другое">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Предпочтение в еде</strong><br></label>
+            <textarea name="food_prefer" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Аллергия</strong><br></label>
+            <textarea name="allergy" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Заболевании</strong><br></label>
+            <textarea name="illness" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+          
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Опыт работы в кино на TV</strong><br></label>
+            <textarea name="job_experience_tv" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form">
+      <div class="container">
+        <div class="form-block w-form">
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Опыт работы в театре</strong><br></label>
+            <textarea name="job_experience_teatr" maxlength="5000" placeholder="Укажите через запятую" class="textarea w-input"></textarea>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">О себе</strong><br></label>
+            <textarea name="about_you" maxlength="5000" placeholder="Информация о себе" class="textarea w-input"></textarea>
+          </div>
+          <div class="warp_form">
+            <label class="field-label"><strong class="bold-text">Готовы ли сниматься обнаженными?</strong><br></label>
+            <select name="can_naked" class="select-field w-select">
+              <option value="Нет">Нет</option>
+              <option value="Да">Да</option>
+              <option value="В белье">В белье</option>
+              <option value="В топике">В топике</option>
+            </select>
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Работаете ли вы</strong><br></label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="have_work[]" value="Актер">
+              <span class="checkbox-label w-form-label">Актер</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="have_work[]" value="Профессиональный актер">
+              <span class="checkbox-label w-form-label">Профессиональный актер</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="have_work[]" value="Модель">
+              <span class="checkbox-label w-form-label">Модель</span>
+            </label>
+            <input type="text" class="text-field min_input transport_m w-input" name="have_work1" placeholder="Указать другое">
+          </div>
+          <div class="warp_form"><label class="field-label"><strong class="bold-text">Готовы ли вы работать</strong><br></label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="will_work[]" value="Модель отдельной части тела">
+              <span class="checkbox-label w-form-label">Модель отдельной части тела</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="will_work[]" value="Актер эпизода">
+              <span class="checkbox-label w-form-label">Актер эпизода</span>
+            </label>
+            <label class="w-checkbox"><input type="checkbox" class="w-checkbox-input" name="will_work[]" value="Актер массовых сцен">
+              <span class="checkbox-label w-form-label">Актер массовых сцен</span>
+            </label>
+            <input type="text" class="text-field min_input transport_m w-input" name="will_work1" placeholder="Указать другое">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form">
+      <div class="container">
+        <div class="form-block w-form">
+            <div class="warp_form">
+              <label for="name-5" class="field-label"><strong class="bold-text">Заметка для анкеты</strong><br></label>
+              <textarea name="admin_comment" maxlength="5000" placeholder="Оставьте комментарий" class="textarea w-input"></textarea>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form white_block block_media">
+      <div class="container">
+        <div class="form-block media_block_warp w-form">
+          <div>
+            
+            <div class="warp_form photo_warp" id="img-click"><img src="https://uploads-ssl.webflow.com/5d80be231edd7bf0a2cdaa83/5d885761ad1d4b74ed0ab26f_photo.svg" height="70" alt="">
 
-</form>
+            </div>
+            <article>
+                <label for="files">Select multiple files:</label>
+                <input id="files" type="file" multiple / name="images[]" style="display: none;">
+                <output id="result" />
+              </article>
+          </div>
+          <div>
+            <div class="warp_form photo_warp" id="vid-click"><img src="https://uploads-ssl.webflow.com/5d80be231edd7bf0a2cdaa83/5d885961f0c5f3b187967cf2_video-file.svg" height="70" alt=""></div>
+            <article>
+                <label for="files_vid">Select multiple files:</label>
+                <input id="files_vid" type="file" multiple="multiple"  name="videos[]" / style="display: none;">
+                <output id="resultvid" />
+              </article>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anketa_warp last_form white_block block_media">
+      <div class="container">
+        <div class="form-block media_block_warp w-form">
+          <input type="submit" value="Добавить анкету" data-wait="Please wait..." class="submit-button w-button">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+      
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+
+    $( "#social_acc" ).on( "focus", function() {
+      var modal = document.getElementById("myModal");
+      var span = document.getElementsByClassName("close")[0];
+      modal.style.display = "block";
+      span.onclick = function() {
+        modal.style.display = "none";
+        var socc_insta = $('#socc_insta').val();
+        var socc_vk = $('#socc_vk').val();
+        var socc_ano = $('#socc_ano').val();  
+        var string = socc_insta + "," + socc_vk + "," + socc_ano; 
+        $('#social_acc').val(string);
+      }
+    });
+    $( "#img-click" ).on( "click", function() {
+      $('#files').click();
+    });
+    $( "#vid-click" ).on( "click", function() {
+      $('#files_vid').click();
+    });
+  });
+</script>
 @endsection

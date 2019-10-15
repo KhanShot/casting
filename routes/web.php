@@ -11,8 +11,8 @@ Route::get('admin/move_or_copy', 'PageController@move_or_copy')->name('move_or_c
 Route::get('admin/invoice/{id}', 'CommentsController@invoice');
 Route::get('admin/invoice{id}', 'CommentsController@printPDF');
 
-Route::get('admin/userscreate', 'UsersController@show')->name('create');
-Route::get('admin/usersstoress', 'UsersController@store')->name('store');
+Route::get('admin/userscreate', 'UsersController@show')->name('user.create');
+Route::get('admin/usersstoress', 'UsersController@store')->name('user.store');
 Route::get('admin/usersedit/{id}', 'UsersController@edit');
 
 Route::get('admin/userseditasd{id}', 'UsersController@destroy');
@@ -30,15 +30,18 @@ Route::get('admin/makepagea', 'PageController@pages')->name('pages');
 Route::get('admin/allpages', 'PageController@allpages')->name('allpages');
 
 Route::get('admin/makepage', 'ProjectController@index')->name('projects');
-Route::get('admin/makepageasdfas', 'ProjectController@store')->name('store');
+Route::get('admin/makepageasdfas', 'ProjectController@store')->name('project.store');
 Route::get('admin/projects/{id}','ProjectController@projects')->name('projects.pro');
 Route::get('admin/projectAll','ProjectController@StoreAll')->name('projectsAll');
 
 Route::post('admin/edited{id}', 'ModelsController@update')->name('update');
+Route::get('admin/users', 'UsersController@index')->name('users');
+
+
 Route::resource('admin', 'ModelsController');
 
 
-Route::get('admin/users', 'UsersController@index')->name('users');
+
 
 
 Route::get('admin/makepageasdf/{id}', 'ModelsController@destroy');
@@ -52,7 +55,7 @@ Route::get('admin/pages/commented', 'CommentsController@store')->name('comments'
 
 
 
-Route::get('MthfckWrldnvrgvp/dntbsht/{id}', 'CommentsController@detail')->name('detail');
+Route::get('MthfckWrldnvrgvp123{id}2131ntbsht', 'CommentsController@detail')->name('detail');
 Route::get('admin/modelview/{id}', 'CommentsController@detailforadmin')->name('detailforadmin');
 
 Route::get('admin/detailpages/{id}', 'PageController@detailpage')->name('detailpages');
@@ -61,7 +64,7 @@ Route::get('admin/detailpages/{id}', 'PageController@detailpage')->name('detailp
 Route::get('admin/edited/{id}', 'ModelsController@deleteImage')->name('deleteImage');
 Route::get('admin/deleteVid/{id}', 'ModelsController@deleteVideo')->name('deleteVideo');
 
-Route::get('Imntthssht/dugtmmssg/{id}', 'PageController@page')->name('admin.pages');
+Route::get('Imntthsshtdugt{id}dugtmmssg', 'PageController@page')->name('admin.pages');
 Route::get('admin/datatable/search', 'ModelsController@search')->name('search');
 Route::get('admin/datatable/advancedsearch', 'ModelsController@advancedSearch')->name('advancedSearch');
 Route::delete('admin/makepage/{id}', 'PageController@delete');

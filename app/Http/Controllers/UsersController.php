@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use willvincent\Rateable\Rating;
-
 use Auth;
 use Illuminate\Support\Facades\Input;
 use App\page_Model;
@@ -15,14 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(){
+        
         if(Auth::check() && Auth::user()->is_admin == 1){
             $users = User::all();
+
             return view('admin.users', compact('users'));
         }
         else{
@@ -49,25 +43,24 @@ class UsersController extends Controller
 
     public function store(Request $request){
         if (Auth::check()) {
+            $data = array();
+            $users = User::all();
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $is_admin = $request->input('is_admin');
+            $password = Hash::make($request->input('password'));
             
-        $data = array();
-        $users = User::all();
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $is_admin = $request->input('is_admin');
-        $password = Hash::make($request->input('password'));
-        
-        $data['name'] = $name;
-        $data['email'] = $email;
-        $data['is_admin'] = $is_admin;
-        $data['password'] = $password;
-        foreach ($users as $user) {
-            if($user->email == $email){
-                return redirect()->back()->with('msg', 'выберите другую почту');   
+            $data['name'] = $name;
+            $data['email'] = $email;
+            $data['is_admin'] = $is_admin;
+            $data['password'] = $password;
+            foreach ($users as $user) {
+                if($user->email == $email){
+                    return redirect()->back()->with('msg', 'выберите другую почту');   
+                }
             }
-        }
-        User::create($data);
-        return redirect('admin/users')->with('success', 'добавлен новый пользователь');
+            User::create($data);
+            return redirect('admin/users')->with('success', 'добавлен новый пользователь');
         }
         else{
             return abort(404);
@@ -131,31 +124,16 @@ class UsersController extends Controller
         $user->email = $email;
         $user->is_admin = $is_admin;
         $password = $request->input('password');
-
         if($password){
             $user->password = Hash::make($password);
         }
-
         $user->save();
-        
         return redirect('admin/users')->with('success2', 'пользователь '. $user->name.' обнавлен');
         }
         else{
             return abort(404);
         }
-
-
-
-
-
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id){
         if (Auth::check()) {
             

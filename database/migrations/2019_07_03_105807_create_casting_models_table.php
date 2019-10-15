@@ -19,7 +19,8 @@ class CreateCastingModelsTable extends Migration
             $table->string('fathersname')->nullable();
             $table->string('model_type')->nullable();
             $table->string('email')->nullable();
-            $table->string('social_acc')->nullable();
+            $table->text('admin_comment')->nullable();
+            $table->text('social_acc')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
             $table->string('gender')->nullable();

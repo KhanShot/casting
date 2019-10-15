@@ -5,8 +5,6 @@
     display: none;
 
 }
-
-
 #container label {
   height: 40px;
   width: 40px;
@@ -135,7 +133,6 @@
 }
 .col{
   border-right: 3px solid #D7FBFE;
-
 }
 .formm{
   margin-top: 20px;

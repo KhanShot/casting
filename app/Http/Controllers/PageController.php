@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
     public function makepage(Request $request){
+
         $ids = $request->input('ids');
         $pagename= $request->input('pagename');
         $page_ida =  page_Model::max('page_id');
@@ -27,7 +28,6 @@ class PageController extends Controller
             if(($request->has('ids'))){
                 $page_ida = $page_ida+1;
                 foreach ($ids as $id) {
-                    // $model = Casting_model::select('name','surname', 'fathersname','age','height', 'weight','appearance','color_hair','color_eyes')->where('id',$id)->get();
                     $model = Casting_model::select('id')->where('id',$id)->get();
                     $name = Casting_model::select('name')->where('id',$id)->get();
                     $name = $name[0]{'name'};
@@ -39,14 +39,18 @@ class PageController extends Controller
                     $pages = page_Model::create($page);
                 }
                 if($request->has('project_name')){
-                    $project = Projects::where('project_name',$request->input('project_name'))->first();
-                    $data = array(
-                        'project_name' => $request->input('project_name'),
-                        'page_id' => $page_ida,
-                        'project_id'=> $project->project_id,
-                    );
-                    Projects::create($data);
+                    foreach ($request->input('project_name') as $project_id) {
+                        $project = Projects::where('id', $project_id)->first();
+                        $data = array(
+                            'project_name' => $project->project_name,
+                            'page_id' => $page_ida,
+                            'project_id'=> $project->project_id,
+                        );
+                        Projects::create($data);
+                    }
+                    
                 }
+                    
                 $page = page_Model::all()->groupBy('page_id');
                 unset($request);
                 return redirect('admin/makepage')->with('success', 'successfully created');
